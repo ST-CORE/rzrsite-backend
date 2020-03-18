@@ -1,2 +1,5 @@
 # rzrsite-backend
-backend part of the site for our friend
+backend solution of the site for our friend
+
+## Supported endpoints:
+/Category - provides list of categories
