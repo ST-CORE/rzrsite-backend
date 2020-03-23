@@ -3,15 +3,20 @@ using RzrSite.Models;
 
 namespace RzrSite.DAL
 {
-  public class RzrSiteDbContext: DbContext
+  public class RzrSiteDbContext : DbContext
   {
     public DbSet<Category> Categories { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder opionsBuilder)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
       //TODO: Add actual path for release
-      opionsBuilder
-        .UseSqlite(@"Data Source=C:\Sources\RZR-SITE\rzrsite-backend\Database\RzrSite.db");
+#if DEBUG
+      optionsBuilder
+        .UseSqlite(@"Data Source=../Database/RzrSite.db");
+#else
+      optionsBuilder
+        .UseSqlite(@"Data Source=./RzrSite.db");
+#endif
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

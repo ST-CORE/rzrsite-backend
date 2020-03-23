@@ -10,4 +10,4 @@ COPY ./Database/RzrSite.db ./Out
 
 EXPOSE 4242/tcp
 
-CMD ["dotnet", "out/RzrSite.API.dll"]
+CMD ["dotnet", "out/RzrSite.API.dll", "--urls=http://localhost:4242/"]
