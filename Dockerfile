@@ -6,7 +6,7 @@ COPY . .
 
 RUN dotnet publish -c Release -o out
 
-COPY ./Database/RzrSite.db ./Out
+COPY ./Database/RzrSite.db ./out
 
 EXPOSE 4242/tcp
 
