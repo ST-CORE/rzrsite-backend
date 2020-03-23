@@ -15,7 +15,7 @@ namespace RzrSite.DAL
         .UseSqlite(@"Data Source=../Database/RzrSite.db");
 #else
       optionsBuilder
-        .UseSqlite(@"Data Source=./RzrSite.db");
+        .UseSqlite(@"Data Source=./Out/RzrSite.db");
 #endif
     }
 
