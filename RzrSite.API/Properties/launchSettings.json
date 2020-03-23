@@ -17,11 +17,10 @@
     },
     "RzrSite.API": {
       "commandName": "Project",
-      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:56131/"
+      "applicationUrl": "http://localhost:4242/"
     }
   }
 }
