@@ -3,6 +3,7 @@ services:
   rzrsite-backend:
     image: "cashtusk/rzrsite-back:latest"
     restart: always
+    hostname: rzrsite-backend
 networks:
   default:
     external:
