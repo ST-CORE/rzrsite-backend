@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RzrSite.Models;
+using RzrSite.Models.Entities;
 
 namespace RzrSite.DAL
 {
