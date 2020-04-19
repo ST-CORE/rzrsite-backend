@@ -22,13 +22,7 @@ Category {
             key int SeriesId;
             string Title; =========> <span>Высокая эффективность<br/> (КПД 85-90%)</span> 
             int Weight;
-
-            Icon {
-                string Path
-                { image }
-
-                ++ GET ( Url ) -> Image: { path }
-            }
+            string IconUrl;
 
             ++ CRUD
         }

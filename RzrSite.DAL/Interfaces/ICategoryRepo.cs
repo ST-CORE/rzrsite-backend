@@ -1,4 +1,4 @@
-﻿using RzrSite.Models.Interfaces;
+﻿using RzrSite.Models.Entities.Interfaces;
 using System.Collections.Generic;
 
 namespace RzrSite.DAL.Interfaces

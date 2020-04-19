@@ -1,5 +1,5 @@
 ﻿using RzrSite.DAL.Interfaces;
-using RzrSite.Models.Interfaces;
+using RzrSite.Models.Entities.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
