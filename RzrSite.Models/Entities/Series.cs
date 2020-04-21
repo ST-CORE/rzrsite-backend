@@ -5,6 +5,7 @@ using RzrSite.Models.Entities.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace RzrSite.Models.Entities
@@ -20,29 +21,11 @@ namespace RzrSite.Models.Entities
     public string Name { get; set; }
     public string Description { get; set; }
     public int Weight { get; set; }
+    [NotMapped] //TODO: Remove
     public IList<IAdvantage> Advantages { get; set; }
+    [NotMapped] //TODO: Remove
     public IList<IDocument> Documents { get; set; }
+    [NotMapped] //TODO: Remove
     public IList<IProduct> Products { get; set; }
-
-    public IList<IAggregatedFeature> AgregateFeatures()
-    {
-      var features = Products.SelectMany(p => p.Features);
-      var comparer = new FeatureTypeComparer();
-      var featureTypes = features.GroupBy(p => p.Type, comparer);
-      var result = new List<IAggregatedFeature>();
-
-      foreach (var featureGroup in featureTypes)
-      {
-        var aggregatedFeature = new AggregatedFeature
-        {
-          FeatureType = featureGroup.Key,
-          FeatureByProductId = new Dictionary<int, IFeature>(featureGroup.Select(f => new KeyValuePair<int, IFeature>(f.ProductId, f)))
-        };
-
-        result.Add(aggregatedFeature);
-      }
-
-      return result;
-    }
   }
 }

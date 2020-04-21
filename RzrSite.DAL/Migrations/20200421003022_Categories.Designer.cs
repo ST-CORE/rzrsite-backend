@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RzrSite.DAL;
 
 namespace RzrSite.DAL.Migrations
 {
     [DbContext(typeof(RzrSiteDbContext))]
-    partial class RzrSiteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200421003022_Categories")]
+    partial class Categories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
