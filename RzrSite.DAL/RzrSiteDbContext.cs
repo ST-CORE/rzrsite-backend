@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RzrSite.Models.Entities;
+using RzrSite.Models.Entities.Interfaces;
+using System.Collections.Generic;
 
 namespace RzrSite.DAL
 {
@@ -21,7 +23,10 @@ namespace RzrSite.DAL
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+      modelBuilder.Entity<Category>().HasMany(c => (IList<Series>)c.Series).WithOne();
+
       modelBuilder.Entity<Category>().ToTable("Categories");
+      modelBuilder.Entity<Series>().ToTable("Series");
     }
   }
 }

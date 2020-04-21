@@ -11,8 +11,11 @@ namespace RzrSite.Models.Entities
   {
     [Key]
     public int Id { get; set; }
+    [Required]
     public string Name { get; set; }
+    [Required]
     public int Weight { get; set; }
+    [Required]
     public string Path { get; set; }
     public IList<ISeries> Series { get; set; }
   }

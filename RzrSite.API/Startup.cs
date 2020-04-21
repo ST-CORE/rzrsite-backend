@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RzrSite.DAL;
-using RzrSite.DAL.Interfaces;
+using RzrSite.DAL.Reposiories.Interfaces;
 using RzrSite.DAL.Repositories;
+using System.Reflection;
 
 namespace RzrSite.API
 {
@@ -20,6 +22,7 @@ namespace RzrSite.API
 
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddAutoMapper(typeof(RzrSiteDbContext));
       services.AddControllers();
 
       services.AddScoped<ICategoryRepo, CategoryRepo>();
