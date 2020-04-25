@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RzrSite.Models.Entities;
-using RzrSite.Models.Entities.Interfaces;
 using System.Collections.Generic;
 
 namespace RzrSite.DAL
@@ -8,6 +7,7 @@ namespace RzrSite.DAL
   public class RzrSiteDbContext : DbContext
   {
     public DbSet<Category> Categories { get; set; }
+    public DbSet<ProductLine> ProductLines { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -23,10 +23,18 @@ namespace RzrSite.DAL
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Category>().HasMany(c => (IList<Series>)c.Series).WithOne();
+      modelBuilder.Entity<Category>().HasMany(c => (IList<ProductLine>)c.ProductLines).WithOne();
+
+      modelBuilder.Entity<ProductLine>().HasMany(pl => (IList<Advantage>)pl.Advantages).WithOne();
+      modelBuilder.Entity<ProductLine>().HasMany(pl => (IList<Product>)pl.Products).WithOne();
+      modelBuilder.Entity<ProductLine>().HasMany(pl => (IList<Document>)pl.Documents).WithOne();
+
 
       modelBuilder.Entity<Category>().ToTable("Categories");
-      modelBuilder.Entity<Series>().ToTable("Series");
+      modelBuilder.Entity<ProductLine>().ToTable("ProductLines");
+      modelBuilder.Entity<Product>().ToTable("Products");
+      modelBuilder.Entity<Advantage>().ToTable("Advantages");
+      modelBuilder.Entity<Document>().ToTable("Documents");
     }
   }
 }

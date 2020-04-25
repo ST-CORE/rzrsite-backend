@@ -12,6 +12,6 @@ namespace RzrSite.Models.Entities.Interfaces
     int Weight { get; set; }
     string Path { get; set; }
 
-    IList<ISeries> Series { get; set; }
+    IList<IProductLine> ProductLines { get; set; }
   }
 }

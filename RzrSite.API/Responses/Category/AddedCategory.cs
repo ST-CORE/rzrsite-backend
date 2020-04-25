@@ -6,7 +6,7 @@
 
     public AddedCategory(int id)
     {
-      Path = $"{Consts.Routes.Category}{id}";
+      Path = $"api/Category/{id}";
     }
   }
 }
