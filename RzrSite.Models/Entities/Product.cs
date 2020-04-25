@@ -1,6 +1,7 @@
 ﻿using RzrSite.Models.Entities.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RzrSite.Models.Entities
 {
@@ -16,8 +17,11 @@ namespace RzrSite.Models.Entities
     public decimal Price { get; set; }
     public bool InStock { get; set; }
     public int Weight { get; set; }
+    [NotMapped]
     public IImage PrimaryImage { get; set; }
+    [NotMapped]
     public IList<IImage> Images { get; set; }
+    [NotMapped]
     public IList<IFeature> Features { get; set; }
   }
 }

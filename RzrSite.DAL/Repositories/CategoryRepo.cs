@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using RzrSite.DAL.Reposiories.Interfaces;
+using RzrSite.DAL.Repositories.Interfaces;
 using RzrSite.Models.Entities;
 using RzrSite.Models.Entities.Interfaces;
 using RzrSite.Models.Resources.Category.Interfaces;
@@ -22,7 +22,7 @@ namespace RzrSite.DAL.Repositories
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public IEnumerable<ICategory> GetCategories()
+    public IEnumerable<ICategory> GetAll()
     {
       return _ctx.Categories.ToList();
     }
@@ -30,15 +30,17 @@ namespace RzrSite.DAL.Repositories
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public ICategory GetCategory(int id)
+    public ICategory Get(int id)
     {
-      return _ctx.Categories.Find(id);
+      var category = _ctx.Categories.Find(id);
+      category.ProductLines = _ctx.ProductLines.Where(pl => pl.CategoryId == id)?.AsEnumerable<IProductLine>().ToList();
+      return category;
     }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public ICategory UpdateCategory(int id, IPutCategory category)
+    public ICategory Update(int id, IPutCategory category)
     {
       var entity = _ctx.Categories.Find(id);
       if (entity == null) return null;
@@ -51,7 +53,7 @@ namespace RzrSite.DAL.Repositories
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public int? AddCategory(IPostCategory category)
+    public int? Add(IPostCategory category)
     {
       var model = _mapper.Map<Category>(category);
       var result = _ctx.Categories.Add(model);
@@ -62,11 +64,11 @@ namespace RzrSite.DAL.Repositories
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public bool DeleteCategory(int id)
+    public bool Delete(int id)
     {
       if (!_ctx.Categories.Any(c => c.Id.Equals(id))) return true;
       var category = _ctx.Categories.Find(id);
-      if(category.Series != null && category.Series.Any()) return false;
+      if(category.ProductLines != null && category.ProductLines.Any()) return false;
 
       _ctx.Categories.Remove(category);
 

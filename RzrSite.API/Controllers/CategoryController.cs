@@ -1,52 +1,56 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using RzrSite.API.Responses.Category;
-using RzrSite.DAL.Reposiories.Interfaces;
+using RzrSite.DAL.Repositories.Interfaces;
 using RzrSite.Models.Resources.Category;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RzrSite.API.Controllers
 {
   [ApiController]
 
-  [Route(Consts.Routes.Category)]
+  [Route("/api/Category")]
   public class CategoryController : ControllerBase
   {
     private ICategoryRepo _repo;
+    private IMapper _mapper;
 
-
-    public CategoryController(ICategoryRepo repo)
+    public CategoryController(ICategoryRepo repo, IMapper mapper)
     {
       _repo = repo;
+      _mapper = mapper;
     }
 
     [HttpGet]
     public IActionResult GetCategories()
     {
-      var categories = _repo.GetCategories();
-      if(categories == null || !categories.Any())
+      var categories = _repo.GetAll();
+      if (categories == null || !categories.Any())
       {
         return NoContent();
       }
 
-      return Ok(categories);
+      return Ok(_mapper.Map<IList<StrippedCategory>>(categories));
     }
 
     [HttpGet("{id}")]
     public IActionResult GetCategory(int id)
     {
-      var category = _repo.GetCategory(id);
+      var category = _repo.Get(id);
       if (category == null)
       {
         return NoContent();
       }
 
-      return Ok(category);
+      return Ok(_mapper.Map<FullCategory>(category));
     }
 
     [HttpPost]
     public IActionResult AddCategory(PostCategory category)
     {
-      var categoryId = _repo.AddCategory(category);
+      var categoryId = _repo.Add(category);
       if (!categoryId.HasValue)
       {
         return Problem("Unable to add category into the DB");
@@ -58,19 +62,19 @@ namespace RzrSite.API.Controllers
     [HttpPut("{id}")]
     public IActionResult UpdateCategory(int id, PutCategory category)
     {
-      var found = _repo.GetCategory(id) != null;
+      var found = _repo.Get(id) != null;
       if (!found) return NotFound();
 
-      var categories = _repo.UpdateCategory(id, category);
-      
-      return Ok(categories);
+      var categories = _repo.Update(id, category);
+
+      return Ok(_mapper.Map<StrippedCategory>(categories));
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteCategory(int id)
     {
       //Check if empty
-      var deleted = _repo.DeleteCategory(id);
+      var deleted = _repo.Delete(id);
       if (!deleted)
       {
         return BadRequest("Failed to delete a category. Make sure it doesn't contain any series");

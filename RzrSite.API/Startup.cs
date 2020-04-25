@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RzrSite.API.Filters;
+using RzrSite.API.Middleware;
 using RzrSite.DAL;
-using RzrSite.DAL.Reposiories.Interfaces;
 using RzrSite.DAL.Repositories;
-using System.Reflection;
+using RzrSite.DAL.Repositories.Interfaces;
 
 namespace RzrSite.API
 {
@@ -22,10 +23,16 @@ namespace RzrSite.API
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddAutoMapper(typeof(RzrSiteDbContext));
-      services.AddControllers();
+      services.AddAutoMapper(typeof(RzrSiteDbContext), typeof(Startup));
+
+      services.AddControllers(options =>
+        {
+          options.Filters.Add(new EntityNotFoundFilter());
+          options.Filters.Add(new InconsistentStructureFilter());
+        });
 
       services.AddScoped<ICategoryRepo, CategoryRepo>();
+      services.AddScoped<IProductLineRepo, ProductLineRepo>();
 
       services.AddDbContext<RzrSiteDbContext>();
     }
@@ -35,6 +42,10 @@ namespace RzrSite.API
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
+      }
+      else
+      {
+        app.UseExceptionHandler("/Error");
       }
 
       app.UseRouting();

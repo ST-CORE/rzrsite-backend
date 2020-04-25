@@ -17,6 +17,6 @@ namespace RzrSite.Models.Entities
     public int Weight { get; set; }
     [Required]
     public string Path { get; set; }
-    public IList<ISeries> Series { get; set; }
+    public IList<IProductLine> ProductLines { get; set; }
   }
 }
