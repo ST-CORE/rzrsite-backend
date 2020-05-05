@@ -20,5 +20,19 @@ namespace RzrSite.API.Converters
 
       throw new UnknownContentTypeException($"Content type for format {Enum.GetName(typeof(FileFormat), format)} is unknown");
     }
+
+    public static FileFormat FromString(string contentType)
+    {
+      switch (contentType)
+      {
+        case "jpeg":
+          return FileFormat.Jpg;
+        case "pdf":
+          return FileFormat.Pdf;
+        case "png":
+          return FileFormat.Png;
+      }
+      throw new UnknownContentTypeException($"Content type :{contentType}: is unknown");
+    }
   }
 }

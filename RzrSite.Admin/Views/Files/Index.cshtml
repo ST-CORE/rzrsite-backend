@@ -1,0 +1,51 @@
+﻿@{
+  ViewData["Title"] = "Закачать файлы недорого без СМС";
+}
+@model IList<RzrSite.Models.Entities.Interfaces.IDbFile>
+
+<div class="text-center">
+  <table class="table flex-fill">
+    <thead>
+      <tr>
+        <th>
+          Id
+        </th>
+        <th>
+          Тип
+        </th>
+        <th>
+          Размер
+        </th>
+        <th>
+          Ссылка
+        </th>
+        <th>
+          Действия
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var dbFile in Model)
+      {
+        <tr>
+          <td>
+            @dbFile.Id
+          </td>
+          <td>
+            @dbFile.Format
+          </td>
+          <td>
+            @dbFile.Bytes.Count()
+          </td>
+          <td>
+            @dbFile.Path
+          </td>
+          <td>
+            <a>Редактировать</a><br/>
+            <a>Удалить</a>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
