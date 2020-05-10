@@ -14,7 +14,7 @@ namespace RzrSite.DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2");
+                .HasAnnotation("ProductVersion", "3.1.3");
 
             modelBuilder.Entity("RzrSite.Models.Entities.Advantage", b =>
                 {
@@ -58,6 +58,26 @@ namespace RzrSite.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("RzrSite.Models.Entities.DbFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte[]>("Bytes")
+                        .HasColumnType("BLOB");
+
+                    b.Property<int>("Format")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DbFile");
                 });
 
             modelBuilder.Entity("RzrSite.Models.Entities.Document", b =>

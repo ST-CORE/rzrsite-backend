@@ -33,6 +33,7 @@ namespace RzrSite.API
 
       services.AddScoped<ICategoryRepo, CategoryRepo>();
       services.AddScoped<IProductLineRepo, ProductLineRepo>();
+      services.AddScoped<IDbFileRepo, DbFileRepo>();
 
       services.AddDbContext<RzrSiteDbContext>();
     }

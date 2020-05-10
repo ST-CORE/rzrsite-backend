@@ -8,16 +8,16 @@ namespace RzrSite.DAL
   {
     public DbSet<Category> Categories { get; set; }
     public DbSet<ProductLine> ProductLines { get; set; }
+    public DbSet<DbFile> Files { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      //TODO: Add actual path for release
 #if DEBUG
       optionsBuilder
         .UseSqlite(@"Data Source=../Database/RzrSite.db");
 #else
       optionsBuilder
-        .UseSqlite(@"Data Source=./out/RzrSite.db");
+        .UseSqlite(@"Data Source=./out/RzrSite.db");  
 #endif
     }
 
@@ -29,12 +29,12 @@ namespace RzrSite.DAL
       modelBuilder.Entity<ProductLine>().HasMany(pl => (IList<Product>)pl.Products).WithOne();
       modelBuilder.Entity<ProductLine>().HasMany(pl => (IList<Document>)pl.Documents).WithOne();
 
-
       modelBuilder.Entity<Category>().ToTable("Categories");
       modelBuilder.Entity<ProductLine>().ToTable("ProductLines");
       modelBuilder.Entity<Product>().ToTable("Products");
       modelBuilder.Entity<Advantage>().ToTable("Advantages");
       modelBuilder.Entity<Document>().ToTable("Documents");
+      modelBuilder.Entity<DbFile>().ToTable("DbFile");
     }
   }
 }
