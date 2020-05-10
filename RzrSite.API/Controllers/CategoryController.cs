@@ -11,7 +11,7 @@ namespace RzrSite.API.Controllers
 {
   [ApiController]
 
-  [Route("/api/Category")]
+  [Route("/api/category")]
   public class CategoryController : ControllerBase
   {
     private ICategoryRepo _repo;

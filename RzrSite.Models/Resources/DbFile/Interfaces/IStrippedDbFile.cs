@@ -1,6 +1,6 @@
 ﻿using RzrSite.Models.Enums;
 
-namespace RzrSite.Models.Entities.Interfaces
+namespace RzrSite.Models.Resources.DbFile.Interfaces
 {
   public interface IStrippedDbFile
   {

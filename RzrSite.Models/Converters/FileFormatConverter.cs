@@ -1,8 +1,9 @@
-﻿using RzrSite.API.Exceptions;
+﻿using RzrSite.Models.Exceptions;
 using RzrSite.Models.Enums;
 using System;
+using RzrSite.Models.Consts;
 
-namespace RzrSite.API.Converters
+namespace RzrSite.Models.Converters
 {
   public static class FileFormatConverter
   {
@@ -11,11 +12,11 @@ namespace RzrSite.API.Converters
       switch (format)
       {
         case FileFormat.Jpg:
-          return "jpeg";
+          return KnownFormats.JPEG;
         case FileFormat.Pdf:
-          return "pdf";
+          return KnownFormats.PDF;
         case FileFormat.Png:
-          return "png";
+          return KnownFormats.PNG;
       }
 
       throw new UnknownContentTypeException($"Content type for format {Enum.GetName(typeof(FileFormat), format)} is unknown");
@@ -25,14 +26,28 @@ namespace RzrSite.API.Converters
     {
       switch (contentType)
       {
-        case "jpeg":
+        case KnownFormats.JPEG:
           return FileFormat.Jpg;
-        case "pdf":
+        case KnownFormats.PDF:
           return FileFormat.Pdf;
-        case "png":
+        case KnownFormats.PNG:
           return FileFormat.Png;
       }
       throw new UnknownContentTypeException($"Content type :{contentType}: is unknown");
+    }
+
+    public static bool KnownFormat(string contentType)
+    {
+      switch (contentType)
+      {
+        case KnownFormats.JPEG:
+          return true;
+        case KnownFormats.PDF:
+          return true;
+        case KnownFormats.PNG:
+          return true;
+      }
+      return false;
     }
   }
 }

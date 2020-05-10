@@ -1,15 +1,13 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using RzrSite.API.Converters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RzrSite.API.Responses.DbFile;
 using RzrSite.DAL.Repositories.Interfaces;
 using RzrSite.Models.Resources.DbFile;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace RzrSite.API.Controllers
 {
+  [Route("/api/dbfile")]
   public class DbFileController: ControllerBase
   {
     private const long MB30 = (30 * 1024 * 1024);
@@ -20,22 +18,20 @@ namespace RzrSite.API.Controllers
       _repo = repo;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> AddFile(FormFile file)
+    [HttpGet]
+    public async Task<IActionResult> AllFiles()
     {
-      if (file.Length > MB30)
+      var response = _repo.GetAll();
+      return Ok(response);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddFile([FromBody]PostDbFile file)
+    {
+      if (file.Bytes.Length > MB30)
         return BadRequest("Provided file is larger than 30 MB");
 
-      int? id;
-      using(var memoryStream = new MemoryStream())
-      {
-        await file.CopyToAsync(memoryStream);
-        id = _repo.Add(new PostDbFile
-        {
-          Data = memoryStream.ToArray(),
-          Format = FileFormatConverter.FromString(file.ContentType)
-        });
-      }
+      var id = _repo.Add(file);
 
       return Ok(new AddedDbFile(id.GetValueOrDefault()));
     }

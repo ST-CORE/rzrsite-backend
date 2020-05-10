@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RzrSite.API.Exceptions
+namespace RzrSite.Models.Exceptions
 {
   public class UnknownContentTypeException : Exception
   {

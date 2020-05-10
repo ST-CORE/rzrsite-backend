@@ -26,7 +26,7 @@ namespace RzrSite.Admin
         }
         else
         {
-          UrlLocator.ApiUrl = "http://localhost:4242";
+          UrlLocator.ApiUrl = "http://localhost:4242/api";
         }
 
         webBuilder.UseConfiguration(configuration)
