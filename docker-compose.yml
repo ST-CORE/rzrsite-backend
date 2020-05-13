@@ -4,6 +4,10 @@ services:
     image: "cashtusk/rzrsite-back:latest"
     restart: always
     hostname: rzrsite-backend
+  rzrsite-admin:
+    image: "cashtusk/rzrsite-adm:latest"
+    restart: always
+    hostname: rzrsite-admin
 networks:
   default:
     external:
