@@ -4,10 +4,14 @@ services:
     image: "cashtusk/rzrsite-back:latest"
     restart: always
     hostname: rzrsite-backend
+    ports:
+      - "4242:4242"
   rzrsite-admin:
     image: "cashtusk/rzrsite-adm:latest"
     restart: always
     hostname: rzrsite-admin
+    ports:
+      - "4747:4747"
 networks:
   default:
     external:
