@@ -30,6 +30,7 @@ namespace RzrSite.Admin
         }
 
         webBuilder.UseConfiguration(configuration)
+        .UseUrls(configuration["urls"] ?? "http://+:4747")
         .UseStartup<Startup>();
       });
   }
