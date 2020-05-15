@@ -22,6 +22,7 @@ namespace RzrSite
           .Build();
 
         webBuilder.UseConfiguration(configuration)
+        .UseUrls(configuration["urls"] ?? "http://+:4242")
         .UseStartup<Startup>();
       });
   }

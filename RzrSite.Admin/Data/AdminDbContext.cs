@@ -10,7 +10,14 @@ namespace RzrSite.Admin.Data
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      optionsBuilder.UseSqlite(@"Data Source=../Database/RzrSite.Admin.db");
+#if DEBUG
+      
+      optionsBuilder
+        .UseSqlite(@"Data Source=../Database/RzrSite.Admin.db");
+#else
+      optionsBuilder
+        .UseSqlite(@"Data Source=RzrSite.Admin.db");
+#endif
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

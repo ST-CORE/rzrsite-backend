@@ -12,7 +12,3 @@ services:
     hostname: rzrsite-admin
     ports:
       - "4747:4747"
-networks:
-  default:
-    external:
-      name: compose_default
