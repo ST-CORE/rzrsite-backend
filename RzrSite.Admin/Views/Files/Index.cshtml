@@ -32,11 +32,11 @@
             @dbFile.Format
           </td>
           <td>
-            @dbFile.Path
+            @RzrSite.Admin.Helper.UrlLocator.ApiUrl/storage/@dbFile.Path/
           </td>
           <td>
-            <a>Редактировать</a><br />
-            <a>Удалить</a>
+            <a asp-action="Edit" asp-route-id="@dbFile.Id" >Редактировать</a><br />
+            <a asp-action="Delete" asp-route-id="@dbFile.Id">Удалить</a>
           </td>
         </tr>
       }

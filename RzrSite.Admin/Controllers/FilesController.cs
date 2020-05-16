@@ -1,25 +1,30 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RzrSite.Admin.Repository;
 using RzrSite.Admin.ViewModels.Files;
 using RzrSite.Models.Converters;
+using RzrSite.Models.Entities;
 using RzrSite.Models.Resources.DbFile;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace RzrSite.Admin.Controllers
 {
+  [Authorize]
   public class FilesController: Controller
   {
     private const long MB30 = (30 * 1024 * 1024);
     private readonly IDbFileRepository _repo;
+    private readonly IMapper _mapper;
 
-    public FilesController(IDbFileRepository repo)
+    public FilesController(IDbFileRepository repo, IMapper mapper)
     {
       _repo = repo;
+      _mapper = mapper;
     }
 
-    [Authorize]
     [HttpGet]
     public async Task<IActionResult> Index()
     {
@@ -27,7 +32,6 @@ namespace RzrSite.Admin.Controllers
       return View(new IndexViewModel(files));
     }
 
-    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Add(AddViewModel model)
     {
@@ -60,6 +64,50 @@ namespace RzrSite.Admin.Controllers
       return await IndexWithError(response.Message);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+      var file = await _repo.GetFile(id);
+      if(file == null)
+      {
+        return await IndexWithError("File is null, beda-beda");
+      }
+
+      return View(file);
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> Download(int id, string contentType)
+    {
+      var content = await _repo.GetFileContent(id);
+      if (content == null)
+      {
+        return await IndexWithError("File is null, beda-beda");
+      }
+
+      return File(content, contentType);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(int id, PutDbFile file)
+    {
+      var response = await _repo.UpdateFile(id, file);
+      return View(response);
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+      var response = await _repo.RemoveFile(id);
+      if (response == true)
+      {
+        return RedirectToAction("Index");
+      }
+
+      return await IndexWithError("Cannot delete :(");
+    }
 
     private async Task<ViewResult> IndexWithError(string error)
     {

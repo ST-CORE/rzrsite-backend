@@ -1,12 +1,15 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RzrSite.Admin.Configuration;
 using RzrSite.Admin.Data;
+using RzrSite.Admin.Profiles;
 using RzrSite.Admin.Repository;
 using RzrSite.Models.Entities;
 
@@ -28,7 +31,7 @@ namespace RzrSite.Admin
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc();
-
+      services.AddAutoMapper(typeof(DbFileProfile));
       services.AddAuthentication(CookieScheme) // Sets the default scheme to cookies
           .AddCookie(CookieScheme, options =>
           {
@@ -67,7 +70,12 @@ namespace RzrSite.Admin
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapDefaultControllerRoute();
-      });
+        //endpoints.MapControllerRoute("staticFiles",
+        //  "storage/{* path}",
+        //  defaults: new { conroller = "DbFile", action = "Storage" });
+      
+      }
+      );
     }
   }
 }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +11,7 @@ using RzrSite.API.Middleware;
 using RzrSite.DAL;
 using RzrSite.DAL.Repositories;
 using RzrSite.DAL.Repositories.Interfaces;
+using System;
 
 namespace RzrSite.API
 {
@@ -24,6 +27,11 @@ namespace RzrSite.API
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddAutoMapper(typeof(RzrSiteDbContext), typeof(Startup));
+
+      services.AddCors(options =>
+      {
+        options.AddDefaultPolicy(builder => builder.AllowAnyOrigin());
+      });
 
       services.AddControllers(options =>
         {
