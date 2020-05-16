@@ -26,6 +26,30 @@ namespace RzrSite.Admin.Repository
       return null;
     }
 
+    public async Task<StrippedDbFile> GetFile(int id)
+    {
+      var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/dbfile/{id}");
+      if (response.IsSuccessStatusCode)
+      {
+        var resultString = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<StrippedDbFile>(resultString);
+      }
+
+      return null;
+    }
+
+    public async Task<byte[]> GetFileContent(int id)
+    {
+      var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/dbfile/content/{id}");
+      if (response.IsSuccessStatusCode)
+      {
+        var resultString = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<byte[]>(resultString);
+      }
+
+      return null;
+    }
+
     public async Task<IList<StrippedDbFile>> GetFileList()
     {
       var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/dbfile");
@@ -38,14 +62,28 @@ namespace RzrSite.Admin.Repository
       return null;
     }
 
-    public async Task<DbFileResponse> RemoveFile(int id)
+    public async Task<bool> RemoveFile(int id)
     {
-      throw new System.NotImplementedException();
+      var response = await _client.DeleteAsync($"{UrlLocator.ApiUrl}/dbfile/{id}");
+      if (response.IsSuccessStatusCode)
+      {
+        return true;
+      }
+
+      return false;
     }
 
-    public async Task<DbFileResponse> UpdateFile(PutDbFile putFile)
+    public async Task<StrippedDbFile> UpdateFile(int id, PutDbFile putFile)
     {
-      throw new System.NotImplementedException();
+      var stringifiedObject = JsonConvert.SerializeObject(putFile);
+      var response = await _client.PutAsync($"{UrlLocator.ApiUrl}/dbfile/{id}", new StringContent(stringifiedObject, Encoding.Default, "application/json"));
+      if (response.IsSuccessStatusCode)
+      {
+        var resultString = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<StrippedDbFile>(resultString);
+      }
+
+      return null;
     }
   }
 }

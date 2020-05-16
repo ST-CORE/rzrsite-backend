@@ -47,9 +47,9 @@ namespace RzrSite.DAL.Repositories
     /// </summary>
     public IDbFile Get(string path)
     {
-      if (!_ctx.Files.Any(f => f.Path.Equals(path, System.StringComparison.InvariantCultureIgnoreCase)))
+      if (!_ctx.Files.Any(p => p.Path.ToLower() == path.ToLower()))
         throw new EntityNotFoundException($"File :{path}: not found");
-      var file = _ctx.Files.First(f => f.Path.Equals(path, System.StringComparison.InvariantCultureIgnoreCase));
+      var file = _ctx.Files.First(f => path.ToLower() == f.Path.ToLower());
       
       return file;
     }
@@ -74,7 +74,7 @@ namespace RzrSite.DAL.Repositories
       if (!_ctx.Files.Any(c => c.Id.Equals(id)))
         throw new EntityNotFoundException($"File :{id}: not found");
       var file = _ctx.Files.Find(id);
-      file = _mapper.Map<DbFile>(fileChanges);
+      file = _mapper.Map(fileChanges, file);
 
       _ctx.SaveChanges();
 

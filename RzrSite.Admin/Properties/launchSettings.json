@@ -1,4 +1,5 @@
 {
+  "profiles": {
     "RzrSite.Admin": {
       "commandName": "Project",
       "launchBrowser": true,
