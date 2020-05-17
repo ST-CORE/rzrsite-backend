@@ -18,11 +18,15 @@
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
           <ul class="navbar-nav row">
-            <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Files" asp-action="Index">Files</a>
-            </li>
             @if (User.Identity.IsAuthenticated)
             {
+              <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Files" asp-action="Index">Files</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Categories</a>
+              </li>
+
               <li class="float-right nav-link"><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
             }
           </ul>

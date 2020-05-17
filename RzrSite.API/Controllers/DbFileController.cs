@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RzrSite.API.Responses.DbFile;
 using RzrSite.DAL.Repositories.Interfaces;
 using RzrSite.Models.Converters;
 using RzrSite.Models.Resources.DbFile;
+using RzrSite.Models.Responses.DbFile;
 using System;
 
 namespace RzrSite.API.Controllers

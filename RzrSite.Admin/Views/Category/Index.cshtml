@@ -1,0 +1,66 @@
+﻿@{
+  ViewData["Title"] = "Список категорий, например";
+}
+@model RzrSite.Admin.ViewModels.Category.IndexViewModel
+<div class="text-center">
+  <table class="table flex-fill">
+    <thead>
+      <tr>
+        <th width="50px">
+          Id
+        </th>
+        <th width="120px">
+          Название
+        </th>
+        <th>
+          Вес
+        </th>
+        <th>
+          Ссылка
+        </th>
+        <th width="250">
+          Действия
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var category in Model.Categories)
+      {
+        <tr>
+          <td>
+            @category.Id
+          </td>
+          <td>
+            @category.Name
+          </td>
+          <td>
+            @category.Weight
+          </td>
+          <td>
+            @category.Path
+          </td>
+          <td>
+            <a asp-action="Edit" asp-route-id="@category.Id">Редактировать</a><br />
+            <a asp-action="Delete" asp-route-id="@category.Id">Удалить</a>
+          </td>
+        </tr>
+      }
+      <tr>
+        <td colspan="4">
+          <hr />
+        </td>
+        <td>
+          <a class="btn btn-success btn-block" asp-action="Add" asp-controller="Category">Добавить</a>
+        </td>
+      </tr>
+      @if (Model.Error != null)
+      {
+        <tr class="bg-danger">
+          <td colspan="4">
+            @Model.Error.Error
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -2,16 +2,15 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RzrSite.Admin.Configuration;
 using RzrSite.Admin.Data;
-using RzrSite.Admin.Profiles;
+using RzrSite.Admin.Repositories;
+using RzrSite.Admin.Repositories.Interfaces;
 using RzrSite.Admin.Repository;
-using RzrSite.Models.Entities;
 
 namespace RzrSite.Admin
 {
@@ -30,8 +29,8 @@ namespace RzrSite.Admin
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddAutoMapper(typeof(Startup));
       services.AddMvc();
-      services.AddAutoMapper(typeof(DbFileProfile));
       services.AddAuthentication(CookieScheme) // Sets the default scheme to cookies
           .AddCookie(CookieScheme, options =>
           {
@@ -43,6 +42,8 @@ namespace RzrSite.Admin
       // is able to also use other services.
       services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, CookieConfiguraion>();
       services.AddScoped<IUserRepository, UserRepository>();
+      services.AddScoped<ICategoryRepository, CategoryRepository>();
+      services.AddScoped<IProductLineRepository, ProductLineRepository>();
       services.AddScoped<IDbFileRepository, DbFileRepository>();
 
       services.AddDbContext<AdminDbContext>();

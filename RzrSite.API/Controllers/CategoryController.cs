@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RzrSite.API.Responses.Category;
 using RzrSite.DAL.Repositories.Interfaces;
 using RzrSite.Models.Resources.Category;
-using System.Collections;
+using RzrSite.Models.Responses.Category;
 using System.Collections.Generic;
 using System.Linq;
 
