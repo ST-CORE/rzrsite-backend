@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RzrSite.Admin.Helper;
-using RzrSite.Admin.Models.DbFile;
 using RzrSite.Models.Resources.DbFile;
+using RzrSite.Models.Responses.DbFile;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -13,14 +13,14 @@ namespace RzrSite.Admin.Repository
   {
     private readonly HttpClient _client = new HttpClient();
 
-    public async Task<DbFileResponse> AddFile(PostDbFile file)
+    public async Task<AddedDbFile> AddFile(PostDbFile file)
     {
       var stringifiedObject = JsonConvert.SerializeObject(file);
       var response = await _client.PostAsync($"{UrlLocator.ApiUrl}/dbfile", new StringContent(stringifiedObject, Encoding.Default, "application/json"));
       if (response.IsSuccessStatusCode)
       {
         var resultString = await response.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<DbFileResponse>(resultString);
+        return JsonConvert.DeserializeObject<AddedDbFile>(resultString);
       }
 
       return null;

@@ -33,7 +33,7 @@ namespace RzrSite.DAL.Repositories
     public ICategory Get(int id)
     {
       var category = _ctx.Categories.Find(id);
-      category.ProductLines = _ctx.ProductLines.Where(pl => pl.CategoryId == id)?.AsEnumerable<IProductLine>().ToList();
+      category.ProductLines = _ctx.ProductLines.Any(pl => pl.CategoryId == id)? _ctx.ProductLines.Where(pl => pl.CategoryId == id).AsEnumerable<IProductLine>().ToList(): null;
       return category;
     }
 

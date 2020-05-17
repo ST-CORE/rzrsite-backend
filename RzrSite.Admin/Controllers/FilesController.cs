@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RzrSite.Admin.Repository;
-using RzrSite.Admin.ViewModels.Files;
+using RzrSite.Admin.ViewModels.File;
 using RzrSite.Models.Converters;
-using RzrSite.Models.Entities;
 using RzrSite.Models.Resources.DbFile;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -17,12 +14,10 @@ namespace RzrSite.Admin.Controllers
   {
     private const long MB30 = (30 * 1024 * 1024);
     private readonly IDbFileRepository _repo;
-    private readonly IMapper _mapper;
 
-    public FilesController(IDbFileRepository repo, IMapper mapper)
+    public FilesController(IDbFileRepository repo)
     {
       _repo = repo;
-      _mapper = mapper;
     }
 
     [HttpGet]
@@ -56,12 +51,12 @@ namespace RzrSite.Admin.Controllers
       }
 
       var response = await _repo.AddFile(newFile);
-      if (response.IsSuccess)
+      if (response != null)
       {
         return RedirectToAction("Index");
       }
 
-      return await IndexWithError(response.Message);
+      return await IndexWithError("Wasn't able to add file :(");
     }
 
     [HttpGet]

@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RzrSite.API.Responses.ProductLine;
 using RzrSite.DAL.Exceptions;
 using RzrSite.DAL.Repositories.Interfaces;
 using RzrSite.Models.Resources.ProductLine;
-using System.Collections;
+using RzrSite.Models.Responses.ProductLine;
 using System.Collections.Generic;
 using System.Linq;
 
