@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,6 +30,12 @@ namespace RzrSite.API
       services.AddCors(options =>
       {
         options.AddDefaultPolicy(builder => builder.AllowAnyOrigin());
+      });
+
+      services.Configure<ForwardedHeadersOptions>(options =>
+      {
+        options.ForwardedHeaders =
+            ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
       });
 
       services.AddControllers(options =>

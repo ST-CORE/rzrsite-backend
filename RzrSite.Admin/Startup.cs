@@ -1,12 +1,11 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using RzrSite.Admin.Configuration;
 using RzrSite.Admin.Data;
 using RzrSite.Admin.Repositories;
 using RzrSite.Admin.Repositories.Interfaces;
@@ -31,16 +30,15 @@ namespace RzrSite.Admin
     {
       services.AddAutoMapper(typeof(Startup));
       services.AddMvc();
+
       services.AddAuthentication(CookieScheme) // Sets the default scheme to cookies
           .AddCookie(CookieScheme, options =>
           {
-            options.AccessDeniedPath = "/account/denied";
+            options.AccessDeniedPath = "/account/accessdenied";
             options.LoginPath = "/account/login";
           });
-
       // Example of how to customize a particular instance of cookie options and
       // is able to also use other services.
-      services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, CookieConfiguraion>();
       services.AddScoped<IUserRepository, UserRepository>();
       services.AddScoped<ICategoryRepository, CategoryRepository>();
       services.AddScoped<IProductLineRepository, ProductLineRepository>();
@@ -71,10 +69,6 @@ namespace RzrSite.Admin
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapDefaultControllerRoute();
-        //endpoints.MapControllerRoute("staticFiles",
-        //  "storage/{* path}",
-        //  defaults: new { conroller = "DbFile", action = "Storage" });
-      
       }
       );
     }

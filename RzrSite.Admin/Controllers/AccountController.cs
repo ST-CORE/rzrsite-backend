@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace RzrSite.Admin.Controllers
 {
+  [Route("[controller]")]
   public class AccountController : Controller
   {
     private readonly IUserRepository _userRepository;
@@ -16,13 +17,13 @@ namespace RzrSite.Admin.Controllers
       _userRepository = userRepository;
     }
 
-    [HttpGet]
+    [HttpGet("[action]")]
     public IActionResult Login(string returnUrl = null)
     {
       return View();
     }
 
-    [HttpPost]
+    [HttpPost("[action]")]
     public async Task<IActionResult> Login(string userName, string password, string returnUrl = null)
     {
       ViewData["ReturnUrl"] = returnUrl;
@@ -50,12 +51,14 @@ namespace RzrSite.Admin.Controllers
 
       return View(response);
     }
-
+    
+    [HttpGet("[action]")]
     public IActionResult AccessDenied(string returnUrl = null)
     {
       return View();
     }
 
+    [HttpGet("[action]")]
     public async Task<IActionResult> Logout()
     {
       await HttpContext.SignOutAsync();
