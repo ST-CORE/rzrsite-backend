@@ -1,12 +1,13 @@
 ﻿@model RzrSite.Models.Responses.ProductLine.StrippedProductLine
 @{
   ViewData["Title"] = $"Редактирование линейки {Model.Name}";
+  var categoryId = Convert.ToInt32(ViewContext.RouteData.Values["categoryId"]);
 }
 <div class="row">
   <div class="col-md-8">
     <h2>@ViewData["Title"]</h2>
     <section>
-      <form asp-action="Edit" method="post" class="border-info form-horizontal" role="form">
+      <form asp-action="Edit" asp-route-categoryId="@categoryId" method="post" class="border-info form-horizontal" role="form">
         <div class="form-group form-row">
           <label class="col-md-2 control-label">Id</label>
           <div class="col-md-10">
@@ -30,7 +31,7 @@
         <div class="form-group form-row">
           <label class="col-md-2 control-label">Вес</label>
           <div class="col-md-10">
-            <input type="text" class="form-control" value="@Model.Weight" />
+            <input type="text" name="@nameof(Model.Weight)" class="form-control" value="@Model.Weight" />
           </div>
         </div>
         <div class="form-group form-row">
@@ -48,20 +49,46 @@
         </div>
         <div class="form-group form-row">
           <label class="col-md-2 control-label">Продукты</label>
-          @*<div class="col-md-10">
-        @await Component.InvokeAsync("ProductLines", new { categoryId = Model.Id })
-        <div class="row">
-          <div class="offset-8 col-md-4">
-            <button class="btn btn-block btn-success">
-              Добавить
-            </button>
-          </div>
+          <div class="col-md-10">
+              @await Component.InvokeAsync("Product", new { categoryId = categoryId, productLineId = Model.Id })
+              <div class="row">
+                <div class="offset-8 col-md-4">
+                  <a asp-action="Add" asp-controller="Product" asp-route-categoryId="@categoryId" asp-route-productLineId="@Model.Id" class="btn btn-block btn-success">
+                    Добавить
+                  </a>
+                </div>
+              </div>
+            </div>
         </div>
-      </div>*@
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Преимущества</label>
+          @*<div class="col-md-10">
+              @await Component.InvokeAsync("ProductLines", new { categoryId = Model.Id })
+              <div class="row">
+                <div class="offset-8 col-md-4">
+                  <button class="btn btn-block btn-success">
+                    Добавить
+                  </button>
+                </div>
+              </div>
+            </div>*@
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Документы</label>
+          @*<div class="col-md-10">
+              @await Component.InvokeAsync("ProductLines", new { categoryId = Model.Id })
+              <div class="row">
+                <div class="offset-8 col-md-4">
+                  <button class="btn btn-block btn-success">
+                    Добавить
+                  </button>
+                </div>
+              </div>
+            </div>*@
         </div>
         <div class="form-group form-row">
           <div class="col-md-6">
-            <a class="col-md-6 offset-2" asp-action="NavigateBackwards">Назад</a>
+            <a class="col-md-6 offset-2" asp-route-categoryId="@categoryId" asp-action="NavigateBackwards">Назад</a>
           </div>
           <div class="col-md-6">
             <button type="submit" class="btn btn-outline-info btn-block form-control">Сохранить</button>

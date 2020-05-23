@@ -74,30 +74,6 @@ namespace RzrSite.DAL.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    InStock = table.Column<bool>(nullable: false),
-                    Weight = table.Column<int>(nullable: false),
-                    ProductLineId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Products_ProductLines_ProductLineId",
-                        column: x => x.ProductLineId,
-                        principalTable: "ProductLines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Advantages_ProductLineId",
                 table: "Advantages",
@@ -112,11 +88,6 @@ namespace RzrSite.DAL.Migrations
                 name: "IX_ProductLines_CategoryId",
                 table: "ProductLines",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_ProductLineId",
-                table: "Products",
-                column: "ProductLineId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -126,9 +97,6 @@ namespace RzrSite.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Documents");
-
-            migrationBuilder.DropTable(
-                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "ProductLines");

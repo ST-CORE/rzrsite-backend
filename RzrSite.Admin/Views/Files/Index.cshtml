@@ -1,7 +1,7 @@
 ﻿@{
   ViewData["Title"] = "Закачать файлы недорого без СМС";
 }
-@model RzrSite.Admin.ViewModels.File.IndexViewModel
+@model RzrSite.Admin.ViewModels.Files.IndexViewModel
 
 <div class="text-center">
   <table class="table flex-fill">
@@ -45,7 +45,7 @@
           <hr />
         </td>
         <td>
-          <partial name="AddPartialView" model="new RzrSite.Admin.ViewModels.File.AddViewModel();" />
+          <partial name="AddPartialView" model="new RzrSite.Admin.ViewModels.Files.AddViewModel();" />
         </td>
       </tr>
       @if (Model.Error != null)

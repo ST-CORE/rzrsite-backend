@@ -10,7 +10,7 @@ namespace RzrSite.Models.Entities.Interfaces
     decimal Price { get; set; }
     bool InStock { get; set; }
     int Weight { get; set; }
-
+    string Path { get; set; }
     IImage PrimaryImage { get; set; }
     IList<IImage> Images { get; set; }
 

@@ -26,7 +26,7 @@ namespace RzrSite.API.Controllers
     }
 
     [HttpGet]
-    public IActionResult GetProductLine(int categoryId)
+    public IActionResult GetProductLines(int categoryId)
     {
       var prodLines = _repo.GetAll(categoryId);
       if (prodLines == null || !prodLines.Any())
@@ -38,7 +38,7 @@ namespace RzrSite.API.Controllers
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetProductLines(int categoryId, int id)
+    public IActionResult GetProductLine(int categoryId, int id)
     {
       var category = _categoryRepo.Get(categoryId);
       if (category == null) return NotFound($"Category :{categoryId}: not found");

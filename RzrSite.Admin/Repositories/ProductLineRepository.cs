@@ -27,9 +27,9 @@ namespace RzrSite.Admin.Repositories
       return null;
     }
 
-    public async Task<FullProductLine> GetProductLine(int categoryId, int productLineid)
+    public async Task<FullProductLine> GetProductLine(int categoryId, int productLineId)
     {
-      var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/category/{categoryId}/productline/{productLineid}");
+      var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/category/{categoryId}/productline/{productLineId}");
       if (response.IsSuccessStatusCode)
       {
         var resultString = await response.Content.ReadAsStringAsync();
@@ -62,10 +62,10 @@ namespace RzrSite.Admin.Repositories
       return false;
     }
 
-    public async Task<StrippedProductLine> UpdateProductLine(int categoryId, int productLineId, PutProductLine putProductLine)
+    public async Task<StrippedProductLine> UpdateProductLine(int categoryId, int id, PutProductLine putProductLine)
     {
       var stringifiedObject = JsonConvert.SerializeObject(putProductLine);
-      var response = await _client.PutAsync($"{UrlLocator.ApiUrl}/category/{categoryId}/productline/{productLineId}", new StringContent(stringifiedObject, Encoding.Default, "application/json"));
+      var response = await _client.PutAsync($"{UrlLocator.ApiUrl}/category/{categoryId}/productline/{id}", new StringContent(stringifiedObject, Encoding.Default, "application/json"));
       if (response.IsSuccessStatusCode)
       {
         var resultString = await response.Content.ReadAsStringAsync();

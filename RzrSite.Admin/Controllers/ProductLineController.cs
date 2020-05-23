@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RzrSite.Admin.Repositories.Interfaces;
-using RzrSite.Admin.ViewModels.ProductLine;
+using RzrSite.Admin.ViewModels.ProductLines;
 using RzrSite.Models.Resources.ProductLine;
 using RzrSite.Models.Responses.ProductLine;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RzrSite.Admin.Controllers
@@ -13,10 +14,28 @@ namespace RzrSite.Admin.Controllers
   {
     private readonly IProductLineRepository _repo;
     private readonly IMapper _mapper;
-    public ProductLineController(IProductLineRepository repo, IMapper mapper)
+    private readonly ICategoryRepository _categoryRepo;
+
+    public ProductLineController(ICategoryRepository categoryRepo, IProductLineRepository repo, IMapper mapper)
     {
       _repo = repo;
       _mapper = mapper;
+      _categoryRepo = categoryRepo;
+    }
+
+    [HttpGet("/[controller]")]
+    [HttpGet("/[controller]/[action]")]
+    public async Task<IActionResult> Index()
+    {
+      var categories = await _categoryRepo.GetCategories();
+      var vm = new IndexViewModel();
+      foreach(var category in categories)
+      {
+        var pLines = await _repo.GetProductLines(category.Id);
+        vm.ProductLines.Add(category.Id, pLines.ToList());
+      }
+
+      return View(vm);
     }
 
     [HttpGet("[action]")]

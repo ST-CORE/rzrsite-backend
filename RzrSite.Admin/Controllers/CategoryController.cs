@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RzrSite.Admin.Repositories.Interfaces;
-using RzrSite.Admin.ViewModels.Category;
+using RzrSite.Admin.ViewModels.Categories;
 using RzrSite.Models.Resources.Category;
 using RzrSite.Models.Responses.Category;
 using System.Threading.Tasks;
@@ -31,7 +31,7 @@ namespace RzrSite.Admin.Controllers
 
 
     [HttpGet("[action]")]
-    public async Task<IActionResult> Add()
+    public IActionResult Add()
     {
       return View(new StrippedCategory());
     }
