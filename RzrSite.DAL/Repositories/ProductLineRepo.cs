@@ -80,7 +80,7 @@ namespace RzrSite.DAL.Repositories
     /// </summary>
     public bool Delete(int categoryId, int id)
     {
-      if (!_ctx.Categories.Any(c => c.Id.Equals(id)))
+      if (!_ctx.Categories.Any(c => c.Id.Equals(categoryId)))
         throw new EntityNotFoundException($"Category :{categoryId}: not found");
 
       if (!_ctx.ProductLines.Any(c => c.Id.Equals(id))) 

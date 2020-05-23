@@ -16,7 +16,10 @@ namespace RzrSite.Models.Entities
     public string Title { get; set; }
     public decimal Price { get; set; }
     public bool InStock { get; set; }
+    public string Path { get; set; }
     public int Weight { get; set; }
+    [ForeignKey("ProductLine")]
+    public int ProductLineId { get; set; }
     [NotMapped]
     public IImage PrimaryImage { get; set; }
     [NotMapped]

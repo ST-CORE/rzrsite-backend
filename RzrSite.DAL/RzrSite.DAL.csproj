@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200519193938_Products.cs" />
+    <Compile Remove="Migrations\20200519193938_Products.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Repositories\appsettings.json" />
   </ItemGroup>
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RzrSite.Admin.Repositories.Interfaces;
-using RzrSite.Admin.ViewModels.ProductLine;
+using RzrSite.Admin.ViewModels.ProductLines;
 using System.Threading.Tasks;
 
 namespace RzrSite.Admin.ViewComponents
@@ -17,7 +17,7 @@ namespace RzrSite.Admin.ViewComponents
     public async Task<IViewComponentResult> InvokeAsync(int categoryId)
     {
       var productLines = await _repo.GetProductLines(categoryId);
-      var viewModel = new IndexViewModel(productLines);
+      var viewModel = new ListViewModel(productLines);
       viewModel.CategoryId = categoryId;
       return View(viewModel);
     }

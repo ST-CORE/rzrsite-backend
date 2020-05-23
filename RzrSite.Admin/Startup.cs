@@ -1,8 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,6 +40,7 @@ namespace RzrSite.Admin
       services.AddScoped<IUserRepository, UserRepository>();
       services.AddScoped<ICategoryRepository, CategoryRepository>();
       services.AddScoped<IProductLineRepository, ProductLineRepository>();
+      services.AddScoped<IProductRepository, ProductRepository>();
       services.AddScoped<IDbFileRepository, DbFileRepository>();
 
       services.AddDbContext<AdminDbContext>();

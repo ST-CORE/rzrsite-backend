@@ -11,6 +11,6 @@ namespace RzrSite.Admin.Repositories.Interfaces
     Task<IList<StrippedProductLine>> GetProductLines(int categoryId);
     Task<bool> RemoveProductLine(int categoryId, int id);
     Task<AddedProductLine> AddProductLine(int categoryId, PostProductLine postProductLine);
-    Task<StrippedProductLine> UpdateProductLine(int categoryId, int productLineId, PutProductLine putProductLine);
+    Task<StrippedProductLine> UpdateProductLine(int categoryId, int id, PutProductLine putProductLine);
   }
 }

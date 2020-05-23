@@ -114,10 +114,13 @@ namespace RzrSite.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Path")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("ProductLineId")
+                    b.Property<int>("ProductLineId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
@@ -179,7 +182,9 @@ namespace RzrSite.DAL.Migrations
                 {
                     b.HasOne("RzrSite.Models.Entities.ProductLine", null)
                         .WithMany("Products")
-                        .HasForeignKey("ProductLineId");
+                        .HasForeignKey("ProductLineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RzrSite.Models.Entities.ProductLine", b =>

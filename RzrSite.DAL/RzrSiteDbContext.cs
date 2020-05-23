@@ -7,6 +7,7 @@ namespace RzrSite.DAL
   public class RzrSiteDbContext : DbContext
   {
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Product> Products { get; set; }
     public DbSet<ProductLine> ProductLines { get; set; }
     public DbSet<DbFile> Files { get; set; }
 

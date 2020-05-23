@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RzrSite.Admin.Repository;
-using RzrSite.Admin.ViewModels.File;
+using RzrSite.Admin.ViewModels.Files;
 using RzrSite.Models.Converters;
 using RzrSite.Models.Resources.DbFile;
 using System.IO;
