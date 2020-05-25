@@ -29,7 +29,7 @@
         <div class="form-group form-row">
           <label class="col-md-2 control-label">В наличии?</label>
           <div class="col-md-10">
-            <input type="checkbox" name="@nameof(Model.InStock)" class="form-control">
+            @Html.CheckBox("InStock", new { @class = "form-control" })
           </div>
         </div>
         <div class="form-group form-row">

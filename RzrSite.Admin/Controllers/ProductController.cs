@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RzrSite.Admin.Repositories.Interfaces;
-using RzrSite.Models.Entities;
 using RzrSite.Models.Resources.Product;
 using System.Threading.Tasks;
 

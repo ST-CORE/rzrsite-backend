@@ -5,8 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200425125311_ProductLines.cs" />
+    <Compile Remove="Migrations\20200425125311_ProductLines.Designer.cs" />
+    <Compile Remove="Migrations\20200510172007_DbFiles.cs" />
+    <Compile Remove="Migrations\20200510172007_DbFiles.Designer.cs" />
     <Compile Remove="Migrations\20200519193938_Products.cs" />
     <Compile Remove="Migrations\20200519193938_Products.Designer.cs" />
+    <Compile Remove="Migrations\20200523093556_Products.cs" />
+    <Compile Remove="Migrations\20200523093556_Products.Designer.cs" />
+    <Compile Remove="Migrations\20200524133130_Advantages.cs" />
+    <Compile Remove="Migrations\20200524133130_Advantages.Designer.cs" />
+    <Compile Remove="Migrations\20200524223908_Advantages.cs" />
+    <Compile Remove="Migrations\20200524223908_Advantages.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Repositories\appsettings.json">
+    <Content Include="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

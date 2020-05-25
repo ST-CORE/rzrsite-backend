@@ -11,9 +11,12 @@ namespace RzrSite.Models.Entities
   {
     [Key]
     public int Id { get; set; }
+    [ForeignKey("ProductLine")]
+    public int ProductLineId { get; set; }
     public string Title { get; set; }
     public int Weight { get; set; }
-    [NotMapped]
+    [ForeignKey("Icon")]
+    public int? IconId { get; set; }
     public IDbFile Icon { get; set; }
   }
 }

@@ -18,11 +18,8 @@ namespace RzrSite.Models.Entities
     public string Name { get; set; }
     public string Description { get; set; }
     public int Weight { get; set; }
-    [NotMapped]
     public IList<IAdvantage> Advantages { get; set; }
-    [NotMapped]
     public IList<IDocument> Documents { get; set; }
-    [NotMapped]
     public IList<IProduct> Products { get; set; }
   }
 }

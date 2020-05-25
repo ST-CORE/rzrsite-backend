@@ -1,0 +1,47 @@
+﻿@model RzrSite.Models.Responses.Advantage.FullAdvantage
+@{
+  ViewData["Title"] = $"Редактирование преимущества {Model.Title}";
+  var categoryId = Convert.ToInt32(ViewContext.RouteData.Values["categoryId"]);
+  var productLineId = Convert.ToInt32(ViewContext.RouteData.Values["productLineId"]);
+}
+<div class="row">
+  <div class="col-md-8">
+    <h2>@ViewData["Title"]</h2>
+    <section>
+      <form asp-action="Edit" method="post" class="border-info form-horizontal" role="form">
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Название</label>
+          <div class="col-md-10">
+            <input type="text" name="@nameof(Model.Title)" class="form-control" value="@Model.Title" />
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Вес</label>
+          <div class="col-md-10">
+            <input name="@nameof(Model.Weight)" type="text" class="form-control" value="@Model.Weight" />
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Путь до иконки</label>
+          <div class="col-md-10">
+            @(string.IsNullOrEmpty(Model.Icon) ? "Не задан" : $"{RzrSite.Admin.Helper.UrlLocator.ApiUrl}/storage/{Model.Icon}")
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Задать иконку</label>
+          <div class="col-md-10">
+            @await Component.InvokeAsync("FileSelect", new { fileType = RzrSite.Admin.Consts.FileTypeConst.Image, fileAssignPrefix = $"/Category/{categoryId}/ProductLine/{productLineId}/Advantage/{Model.Id}/AssignFile/" })
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <div class="col-md-3">
+            <a class="col-md-6 offset-2" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" asp-action="NavigateBackwards">Назад</a>
+          </div>
+          <div class="col-md-9">
+            <button type="submit" class="btn btn-outline-info btn-block form-control">Сохранить</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
