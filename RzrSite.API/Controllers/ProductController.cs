@@ -56,7 +56,7 @@ namespace RzrSite.API.Controllers
       var category = _categoryRepo.Get(categoryId);
       if (category == null) return NotFound($"Category :{categoryId}: not found");
 
-      if (!category.ProductLines.Any(pl => pl.Id == productLineId))
+      if (category.ProductLines != null && !category.ProductLines.Any(pl => pl.Id == productLineId))
         throw new InconsistentStructureException($"ProductLine :{productLineId}: not found in Category :{categoryId}:");
 
       var products = _repo.GetAll(productLineId);
@@ -73,7 +73,7 @@ namespace RzrSite.API.Controllers
       var category = _categoryRepo.Get(categoryId);
       if (category == null) return NotFound($"Category :{categoryId}: not found");
 
-      if (!category.ProductLines.Any(pl => pl.Id == productLineId))
+      if (category.ProductLines!=null && !category.ProductLines.Any(pl => pl.Id == productLineId))
         throw new InconsistentStructureException($"ProductLine :{productLineId}: not found in Category :{categoryId}:");
 
       var prodId = _repo.Add(productLineId, product);
@@ -86,7 +86,7 @@ namespace RzrSite.API.Controllers
       var category = _categoryRepo.Get(categoryId);
       if (category == null) return NotFound($"Category :{categoryId}: not found");
 
-      if (!category.ProductLines.Any(pl => pl.Id == productLineId))
+      if (category.ProductLines != null && !category.ProductLines.Any(pl => pl.Id == productLineId))
         throw new InconsistentStructureException($"ProductLine :{productLineId}: not found in Category :{categoryId}:");
 
       var updatedProduct = _repo.Update(productLineId, id, product);
@@ -100,7 +100,7 @@ namespace RzrSite.API.Controllers
       var category = _categoryRepo.Get(categoryId);
       if (category == null) return NotFound($"Category :{categoryId}: not found");
 
-      if (!category.ProductLines.Any(pl => pl.Id == productLineId))
+      if (category.ProductLines != null && !category.ProductLines.Any(pl => pl.Id == productLineId))
         throw new InconsistentStructureException($"ProductLine :{productLineId}: not found in Category :{categoryId}:");
 
       var deleted = _repo.Delete(productLineId, id);

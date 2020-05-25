@@ -22,7 +22,10 @@ namespace RzrSite.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ProductLineId")
+                    b.Property<int>("IconId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductLineId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
@@ -32,6 +35,8 @@ namespace RzrSite.DAL.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IconId");
 
                     b.HasIndex("ProductLineId");
 
@@ -89,6 +94,9 @@ namespace RzrSite.DAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("FileId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("ProductLineId")
                         .HasColumnType("INTEGER");
 
@@ -100,6 +108,79 @@ namespace RzrSite.DAL.Migrations
                     b.HasIndex("ProductLineId");
 
                     b.ToTable("Documents");
+                });
+
+            modelBuilder.Entity("RzrSite.Models.Entities.Feature", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("Feature");
+                });
+
+            modelBuilder.Entity("RzrSite.Models.Entities.FeatureType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FeatureType");
+                });
+
+            modelBuilder.Entity("RzrSite.Models.Entities.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("FullId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ThumbId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FullId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ThumbId");
+
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("RzrSite.Models.Entities.Product", b =>
@@ -120,6 +201,9 @@ namespace RzrSite.DAL.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("PrimaryImageId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("ProductLineId")
                         .HasColumnType("INTEGER");
 
@@ -130,6 +214,9 @@ namespace RzrSite.DAL.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PrimaryImageId")
+                        .IsUnique();
 
                     b.HasIndex("ProductLineId");
 
@@ -166,9 +253,17 @@ namespace RzrSite.DAL.Migrations
 
             modelBuilder.Entity("RzrSite.Models.Entities.Advantage", b =>
                 {
+                    b.HasOne("RzrSite.Models.Entities.DbFile", "Icon")
+                        .WithMany()
+                        .HasForeignKey("IconId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RzrSite.Models.Entities.ProductLine", null)
                         .WithMany("Advantages")
-                        .HasForeignKey("ProductLineId");
+                        .HasForeignKey("ProductLineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RzrSite.Models.Entities.Document", b =>
@@ -178,8 +273,48 @@ namespace RzrSite.DAL.Migrations
                         .HasForeignKey("ProductLineId");
                 });
 
+            modelBuilder.Entity("RzrSite.Models.Entities.Feature", b =>
+                {
+                    b.HasOne("RzrSite.Models.Entities.Product", null)
+                        .WithMany("Features")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RzrSite.Models.Entities.FeatureType", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RzrSite.Models.Entities.Image", b =>
+                {
+                    b.HasOne("RzrSite.Models.Entities.DbFile", "Full")
+                        .WithMany()
+                        .HasForeignKey("FullId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RzrSite.Models.Entities.Product", null)
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("RzrSite.Models.Entities.DbFile", "Thumb")
+                        .WithMany()
+                        .HasForeignKey("ThumbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("RzrSite.Models.Entities.Product", b =>
                 {
+                    b.HasOne("RzrSite.Models.Entities.Image", "PrimaryImage")
+                        .WithOne()
+                        .HasForeignKey("RzrSite.Models.Entities.Product", "PrimaryImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RzrSite.Models.Entities.ProductLine", null)
                         .WithMany("Products")
                         .HasForeignKey("ProductLineId")

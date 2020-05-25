@@ -20,11 +20,10 @@ namespace RzrSite.Models.Entities
     public int Weight { get; set; }
     [ForeignKey("ProductLine")]
     public int ProductLineId { get; set; }
-    [NotMapped]
+    [ForeignKey("PrimaryImage")]
+    public int? PrimaryImageId { get; set; }
     public IImage PrimaryImage { get; set; }
-    [NotMapped]
     public IList<IImage> Images { get; set; }
-    [NotMapped]
     public IList<IFeature> Features { get; set; }
   }
 }

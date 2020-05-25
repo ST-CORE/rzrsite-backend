@@ -32,7 +32,10 @@ namespace RzrSite.Admin.Controllers
       foreach(var category in categories)
       {
         var pLines = await _repo.GetProductLines(category.Id);
-        vm.ProductLines.Add(category.Id, pLines.ToList());
+        if (pLines != null)
+        {
+          vm.ProductLines.Add(category.Id, pLines.ToList());
+        }
       }
 
       return View(vm);

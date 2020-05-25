@@ -22,6 +22,5 @@ namespace RzrSite.Admin.ViewComponents
       viewModel.ProductLineId = productLineId;
       return View(viewModel);
     }
-
   }
 }
