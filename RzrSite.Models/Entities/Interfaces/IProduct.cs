@@ -11,7 +11,7 @@ namespace RzrSite.Models.Entities.Interfaces
     bool InStock { get; set; }
     int Weight { get; set; }
     string Path { get; set; }
-    IImage PrimaryImage { get; set; }
+    public int ProductLineId { get; set; }
     IList<IImage> Images { get; set; }
 
     IList<IFeature> Features { get; set; }

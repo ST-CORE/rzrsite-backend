@@ -43,6 +43,7 @@ namespace RzrSite.Admin
       services.AddScoped<IProductRepository, ProductRepository>();
       services.AddScoped<IDbFileRepository, DbFileRepository>();
       services.AddScoped<IAdvantageRepository, AdvantageRepository>();
+      services.AddScoped<IImageRepository, ImageRepository>();
 
       services.AddDbContext<AdminDbContext>();
     }

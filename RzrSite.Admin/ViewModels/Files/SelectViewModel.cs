@@ -6,20 +6,26 @@ namespace RzrSite.Admin.ViewModels.Files
   public class SelectViewModel
   {
     public IList<StrippedDbFile> Files { get; set; }
-    public string AssignPathPrefix { get; set; }
+    public string FirstButtonPrefix { get; set; }
+    public string SecondButtonPrefix { get; set; }
 
     public SelectViewModel()
     {
 
     }
 
-    public SelectViewModel(IList<StrippedDbFile> files, string assignPathPrefix)
+    public SelectViewModel(IList<StrippedDbFile> files, string firstButtonPrefix, string secondButtonPrefix)
     {
       Files = files ?? new List<StrippedDbFile>();
 
-      if (!string.IsNullOrEmpty(assignPathPrefix))
+      if (!string.IsNullOrEmpty(firstButtonPrefix))
       {
-        AssignPathPrefix = assignPathPrefix;
+        FirstButtonPrefix = firstButtonPrefix;
+      }
+
+      if (!string.IsNullOrEmpty(secondButtonPrefix))
+      {
+        SecondButtonPrefix = secondButtonPrefix;
       }
     }
   }

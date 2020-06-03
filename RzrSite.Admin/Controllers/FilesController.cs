@@ -28,7 +28,7 @@ namespace RzrSite.Admin.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(AddViewModel model)
+    public async Task<IActionResult> Add(AddViewModel model, string backUrl)
     {
       var formFile = model.FormFile;
       if(formFile == null || formFile.Length <= 0)
@@ -40,7 +40,10 @@ namespace RzrSite.Admin.Controllers
       if (!FileFormatConverter.KnownFormat(formFile.ContentType))
         return await IndexWithError($"{formFile.ContentType} is now known file format!");
 
-      var newFile = new PostDbFile();
+      var newFile = new PostDbFile
+      {
+        Path = model.Path
+      };
 
       using (var ms = new MemoryStream())
       {
@@ -53,7 +56,13 @@ namespace RzrSite.Admin.Controllers
       var response = await _repo.AddFile(newFile);
       if (response != null)
       {
-        return RedirectToAction("Index");
+        if (string.IsNullOrWhiteSpace(backUrl)) {
+          return RedirectToAction("Index");
+        }
+        else
+        {
+          return Redirect(backUrl);
+        }
       }
 
       return await IndexWithError("Wasn't able to add file :(");

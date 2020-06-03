@@ -22,7 +22,7 @@ namespace RzrSite.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IconId")
+                    b.Property<int?>("IconId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ProductLineId")
@@ -160,13 +160,13 @@ namespace RzrSite.DAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("FullId")
+                    b.Property<int?>("FullId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ThumbId")
+                    b.Property<int?>("ThumbId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Weight")
@@ -201,7 +201,7 @@ namespace RzrSite.DAL.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PrimaryImageId")
+                    b.Property<int?>("PrimaryImageId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ProductLineId")
@@ -255,9 +255,7 @@ namespace RzrSite.DAL.Migrations
                 {
                     b.HasOne("RzrSite.Models.Entities.DbFile", "Icon")
                         .WithMany()
-                        .HasForeignKey("IconId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IconId");
 
                     b.HasOne("RzrSite.Models.Entities.ProductLine", null)
                         .WithMany("Advantages")
@@ -292,9 +290,7 @@ namespace RzrSite.DAL.Migrations
                 {
                     b.HasOne("RzrSite.Models.Entities.DbFile", "Full")
                         .WithMany()
-                        .HasForeignKey("FullId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FullId");
 
                     b.HasOne("RzrSite.Models.Entities.Product", null)
                         .WithMany("Images")
@@ -302,18 +298,14 @@ namespace RzrSite.DAL.Migrations
 
                     b.HasOne("RzrSite.Models.Entities.DbFile", "Thumb")
                         .WithMany()
-                        .HasForeignKey("ThumbId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ThumbId");
                 });
 
             modelBuilder.Entity("RzrSite.Models.Entities.Product", b =>
                 {
                     b.HasOne("RzrSite.Models.Entities.Image", "PrimaryImage")
                         .WithOne()
-                        .HasForeignKey("RzrSite.Models.Entities.Product", "PrimaryImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RzrSite.Models.Entities.Product", "PrimaryImageId");
 
                     b.HasOne("RzrSite.Models.Entities.ProductLine", null)
                         .WithMany("Products")
