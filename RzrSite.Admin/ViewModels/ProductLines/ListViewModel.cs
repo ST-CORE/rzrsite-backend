@@ -1,5 +1,4 @@
-﻿using RzrSite.Admin.Models;
-using RzrSite.Models.Responses.ProductLine;
+﻿using RzrSite.Models.Responses.ProductLine;
 using System.Collections.Generic;
 
 namespace RzrSite.Admin.ViewModels.ProductLines

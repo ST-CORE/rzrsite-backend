@@ -30,7 +30,8 @@
         <div class="form-group form-row">
           <label class="col-md-2 control-label">Задать иконку</label>
           <div class="col-md-10">
-            @await Component.InvokeAsync("FileSelect", new { fileType = RzrSite.Admin.Consts.FileTypeConst.Image, fileAssignPrefix = $"/Category/{categoryId}/ProductLine/{productLineId}/Advantage/{Model.Id}/AssignFile/" })
+            @await Component.InvokeAsync("FileSelect", new { fileType = RzrSite.Admin.Consts.FileTypeConst.Image, 
+              firstButtonPrefix = $"/Category/{categoryId}/ProductLine/{productLineId}/Advantage/{Model.Id}/AssignFile/" })
           </div>
         </div>
         <div class="form-group form-row">

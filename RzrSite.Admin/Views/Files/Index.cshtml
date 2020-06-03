@@ -45,7 +45,7 @@
           <hr />
         </td>
         <td>
-          <partial name="AddPartialView" model="new RzrSite.Admin.ViewModels.Files.AddViewModel();" />
+          @await Component.InvokeAsync("AddFile")
         </td>
       </tr>
       @if (Model.Error != null)

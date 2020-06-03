@@ -1,0 +1,37 @@
+﻿@model RzrSite.Admin.ViewModels.Images.ListViewModel
+
+@foreach (var image in Model.Images)
+{
+  <div class="row">
+    <div class="col-md-1">
+      @image.Id
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-3">
+          Большая:
+        </div>
+        <div class="col-md-9">
+          @(string.IsNullOrWhiteSpace(image.FullPath) ?"Не задана":$"{{category - path}}/{image.FullPath}")
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Обрезанная:
+        </div>
+        <div class="col-md-9">
+          @(string.IsNullOrWhiteSpace(image.ThumbPath) ?"Не задана":$"{{category - path}}/{image.ThumbPath}")
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="row">
+        <a asp-action="Edit" asp-controller="Image" asp-route-categoryId="@Model.CategoryId" asp-route-productLineId="@Model.ProductLineId" asp-route-productId="@Model.ProductId" asp-route-id="@image.Id">Редактировать</a>
+      </div>
+      <div class="row">
+        <a asp-action="Delete" asp-controller="Image" asp-route-categoryId="@Model.CategoryId" asp-route-productLineId="@Model.ProductLineId" asp-route-productId="@Model.ProductId" asp-route-id="@image.Id">Удалить</a>
+      </div>
+    </div>
+  </div>
+  <hr />
+}
