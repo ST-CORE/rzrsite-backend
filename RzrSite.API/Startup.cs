@@ -62,7 +62,7 @@ namespace RzrSite.API
         app.UseExceptionHandler("/Error");
       }
       app.UseCors(
-        options => options.AllowAnyOrigin()
+        options => options.WithOrigins("http://rzrsite-backend.ru", "http://rzrsite.cashtusk.ru")
                           .AllowAnyMethod()
                           .AllowAnyHeader()
                           .AllowCredentials()
