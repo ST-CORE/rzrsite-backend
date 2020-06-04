@@ -27,10 +27,7 @@ namespace RzrSite.API
     {
       services.AddAutoMapper(typeof(RzrSiteDbContext), typeof(AddedDbFile));
 
-      services.AddCors(options =>
-      {
-        options.AddDefaultPolicy(builder => builder.AllowAnyOrigin());
-      });
+      services.AddCors();
 
       services.Configure<ForwardedHeadersOptions>(options =>
       {
@@ -64,6 +61,12 @@ namespace RzrSite.API
       {
         app.UseExceptionHandler("/Error");
       }
+      app.UseCors(
+        options => options.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .AllowCredentials()
+      );
 
       app.UseRouting();
       app.UseEndpoints(endpoints =>
