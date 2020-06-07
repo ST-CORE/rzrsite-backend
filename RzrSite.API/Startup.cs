@@ -47,6 +47,7 @@ namespace RzrSite.API
       services.AddScoped<IProductRepo, ProductRepo>();
       services.AddScoped<IAdvantageRepo, AdvantageRepo>();
       services.AddScoped<IImageRepo, ImageRepo>();
+      services.AddScoped<IFeatureTypeRepo, FeatureTypeRepo>();
 
       services.AddDbContext<RzrSiteDbContext>();
     }

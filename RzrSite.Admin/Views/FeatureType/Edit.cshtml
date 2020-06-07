@@ -1,0 +1,33 @@
+﻿@model RzrSite.Models.Entities.FeatureType
+@{
+  ViewData["Title"] = "Редактирование типа параметра >_<";
+}
+<div class="row">
+  <div class="col-md-8">
+    <h2>@ViewData["Title"]</h2>
+    <section>
+      <form asp-action="Edit" method="post" class="border-info form-horizontal" role="form">
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Id</label>
+          <div class="col-md-10">
+            <input type="text" name="@nameof(Model.Id)" class="form-control" readonly="readonly" value="@Model.Id" />
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Название</label>
+          <div class="col-md-10">
+            <input type="text" name="@nameof(Model.Name)" class="form-control" value="@Model.Name" />
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <div class="col-md-3 offset-6">
+            <a href="/FeatureType ">Назад</a>
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-outline-info btn-block form-control">Сохранить</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
