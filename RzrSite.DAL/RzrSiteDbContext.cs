@@ -11,7 +11,8 @@ namespace RzrSite.DAL
     public DbSet<ProductLine> ProductLines { get; set; }
     public DbSet<DbFile> Files { get; set; }
     public DbSet<Image> Images { get; set; }
-    public DbSet<FeatureType> FeatureTypes { get;set; }
+    public DbSet<FeatureType> FeatureTypes { get; set; }
+    public DbSet<Feature> Features { get; set; }
     public DbSet<Advantage> Advantages { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -45,11 +46,14 @@ namespace RzrSite.DAL
       modelBuilder.Entity<Image>().HasOne(p => (DbFile)p.Thumb).WithMany();
 
 
+      //TODO: Rename tables before release!!
       modelBuilder.Entity<Category>().ToTable("Categories");
       modelBuilder.Entity<ProductLine>().ToTable("ProductLines");
       modelBuilder.Entity<Product>().ToTable("Products").HasMany<Image>("Images");
+      modelBuilder.Entity<Product>().HasMany<Feature>("Features");
       modelBuilder.Entity<Advantage>().ToTable("Advantages");
       modelBuilder.Entity<Document>().ToTable("Documents");
+      modelBuilder.Entity<Feature>().ToTable("Feature");
       modelBuilder.Entity<Image>().ToTable("Image");
       modelBuilder.Entity<FeatureType>().ToTable("FeatureType");
       modelBuilder.Entity<DbFile>().ToTable("DbFile");

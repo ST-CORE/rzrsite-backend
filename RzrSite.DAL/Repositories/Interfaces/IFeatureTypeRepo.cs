@@ -36,5 +36,11 @@ namespace RzrSite.DAL.Repositories.Interfaces
     /// <param name="id">Id of feature type to remove</param>
     /// <returns>True if feature type was removed or not found; False - if not empty;</returns>
     bool Delete(int id);
+    /// <summary>
+    /// Checks if feature type exists
+    /// </summary>
+    /// <param name="id">Id of a feature type to loof for</param>
+    /// <returns>True - if feature type is found; False - if not;</returns>
+    bool Exists(int id);
   }
 }

@@ -56,5 +56,7 @@ namespace RzrSite.DAL.Repositories
       _ctx.SaveChanges();
       return true;
     }
+
+    public bool Exists(int id) => (_ctx.FeatureTypes.Find(id) != null);
   }
 }

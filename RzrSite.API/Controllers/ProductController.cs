@@ -20,7 +20,7 @@ namespace RzrSite.API.Controllers
       _categoryRepo = categoryRepo;
     }
 
-    [HttpGet("/api/[controller]/{id}")]
+    [HttpGet("/api/Product/{id}")]
     public IActionResult GetDirectProduct(int id)
     {
       var product = _repo.Get(id);
