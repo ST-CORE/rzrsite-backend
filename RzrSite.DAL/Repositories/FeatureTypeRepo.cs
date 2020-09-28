@@ -19,24 +19,37 @@ namespace RzrSite.DAL.Repositories
       _ctx = ctx;
     }
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public IFeatureType Get(int id)
     {
       return _ctx.FeatureTypes.Find(id);
     }
 
-    public IEnumerable<IFeatureType> GetAll()
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public IEnumerable<IFeatureType> GetAll(int categoryId)
     {
-      return _ctx.FeatureTypes.ToList();
+      return _ctx.FeatureTypes.Where(p => p.CategoryId == categoryId).ToList();
     }
 
-    public int? Add(IPostFeatureType featureType)
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public int? Add(int categoryId, IPostFeatureType featureType)
     {
       var model = _mapper.Map<FeatureType>(featureType);
+      model.CategoryId = categoryId;
       var result = _ctx.FeatureTypes.Add(model);
       _ctx.SaveChanges();
       return result.Entity?.Id;
     }
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public IFeatureType Update(int id, IPutFeatureType featureType)
     {
       var entity = _ctx.FeatureTypes.Find(id);
@@ -47,6 +60,9 @@ namespace RzrSite.DAL.Repositories
       return entity;
     }
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public bool Delete(int id)
     {
       if (!_ctx.FeatureTypes.Any(c => c.Id.Equals(id))) return true;
@@ -57,6 +73,9 @@ namespace RzrSite.DAL.Repositories
       return true;
     }
 
-    public bool Exists(int id) => (_ctx.FeatureTypes.Find(id) != null);
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public bool Exists(int categoryId, int id) => (_ctx.FeatureTypes.Where(ft => ft.CategoryId == categoryId && ft.Id == id) != null);
   }
 }

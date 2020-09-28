@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RzrSite.DAL.Exceptions;
 using RzrSite.DAL.Repositories.Interfaces;
 using RzrSite.Models.Entities;
 using RzrSite.Models.Resources.Feature;
@@ -18,8 +17,9 @@ namespace RzrSite.API.Controllers
     private readonly IFeatureTypeRepo _featureTypeRepo;
     private readonly IFeatureRepo _repo;
     private readonly IProductRepo _productRepo;
+    private readonly IProductLineRepo _productLineRepo;
 
-    public FeatureController(IFeatureRepo repo, IFeatureTypeRepo featureTypeRepo, IProductRepo productRepo, IMapper mapper)
+    public FeatureController(IFeatureRepo repo, IFeatureTypeRepo featureTypeRepo, IProductRepo productRepo, IProductLineRepo productLineRepo, IMapper mapper)
     {
       _mapper = mapper;
       _featureTypeRepo = featureTypeRepo;
@@ -62,8 +62,11 @@ namespace RzrSite.API.Controllers
     {
       if (!_productRepo.Exists(productId))
         return BadRequest($"Product :{productId}: does not exist");
-      
-      if (!_featureTypeRepo.Exists(model.FeatureTypeId))
+
+      var product = _productRepo.Get(productId);
+      var productLine = _productLineRepo.Get(product.ProductLineId);
+
+      if (!_featureTypeRepo.Exists(productLine.CategoryId, model.FeatureTypeId))
         return BadRequest($"Feature Type :{model.FeatureTypeId}: does not exist");
 
       var featureId = _repo.Add(productId, model);
@@ -81,7 +84,10 @@ namespace RzrSite.API.Controllers
       if (!_productRepo.Exists(productId))
         return BadRequest($"Product :{productId}: does not exist");
 
-      if (!_featureTypeRepo.Exists(model.FeatureTypeId))
+      var product = _productRepo.Get(productId);
+      var productLine = _productLineRepo.Get(product.ProductLineId);
+
+      if (!_featureTypeRepo.Exists(productLine.CategoryId, model.FeatureTypeId))
         return BadRequest($"Feature Type :{model.FeatureTypeId}: does not exist");
 
       var found = _repo.Get(productId, id) != null;

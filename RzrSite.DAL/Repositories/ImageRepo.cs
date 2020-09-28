@@ -88,6 +88,7 @@ namespace RzrSite.DAL.Repositories
       foreach (var img in result)
       {
         img.Full = _ctx.Files.Find(img.FullId);
+        img.Thumb = _ctx.Files.Find(img.ThumbId);
       }
 
       return result;

@@ -3,5 +3,6 @@
   public interface IPutFeatureType
   {
     public string Name { get; set; }
+    public string Units { get; set; }
   }
 }

@@ -143,7 +143,13 @@ namespace RzrSite.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Units")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

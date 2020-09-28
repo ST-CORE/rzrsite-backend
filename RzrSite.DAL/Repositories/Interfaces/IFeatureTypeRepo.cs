@@ -10,7 +10,7 @@ namespace RzrSite.DAL.Repositories.Interfaces
     /// Retrieves all existing feature types
     /// </summary>
     /// <returns>List of <see cref="IFeatureType"/></returns>
-    IEnumerable<IFeatureType> GetAll();
+    IEnumerable<IFeatureType> GetAll(int categoryId);
     /// <summary>
     /// Retrieves feature type by Id
     /// </summary>
@@ -22,7 +22,7 @@ namespace RzrSite.DAL.Repositories.Interfaces
     /// </summary>
     /// <param name="featureType">POST resource representation</param>
     /// <returns>Id of added feature type</returns>
-    int? Add(IPostFeatureType featureType);
+    int? Add(int categoryId, IPostFeatureType featureType);
     /// <summary>
     /// Updates existing feature type by PUT resource representation
     /// </summary>
@@ -39,8 +39,9 @@ namespace RzrSite.DAL.Repositories.Interfaces
     /// <summary>
     /// Checks if feature type exists
     /// </summary>
-    /// <param name="id">Id of a feature type to loof for</param>
+    /// <param name="categoryId">Id of a categoryid to look into</param>
+    /// <param name="id">Id of a feature type to look for</param>
     /// <returns>True - if feature type is found; False - if not;</returns>
-    bool Exists(int id);
+    bool Exists(int categoryId, int id);
   }
 }

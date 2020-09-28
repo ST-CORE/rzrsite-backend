@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace RzrSite.API.Controllers
 {
-  [Route("/api/FeatureType")]
+  [Route("/api/Category/{categoryId}/FeatureType")]
   public class FeatureTypeController : Controller
   {
     private readonly IFeatureTypeRepo _repo;
@@ -34,9 +34,9 @@ namespace RzrSite.API.Controllers
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public IActionResult GetAll(int categoryId)
     {
-      var featureTypes = _repo.GetAll();
+      var featureTypes = _repo.GetAll(categoryId);
       if (featureTypes == null || !featureTypes.Any())
       {
         return NoContent();
@@ -46,9 +46,9 @@ namespace RzrSite.API.Controllers
     }
 
     [HttpPost]
-    public IActionResult Add([FromBody]PostFeatureType model)
+    public IActionResult Add(int categoryId, [FromBody]PostFeatureType model)
     {
-      var featureTypeId = _repo.Add(model);
+      var featureTypeId = _repo.Add(categoryId, model);
       if (!featureTypeId.HasValue)
       {
         return Problem("Unable to add feature type into the DB");
@@ -69,7 +69,7 @@ namespace RzrSite.API.Controllers
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(int categoryId, int id)
     {
       //Check if empty
       var deleted = _repo.Delete(id);

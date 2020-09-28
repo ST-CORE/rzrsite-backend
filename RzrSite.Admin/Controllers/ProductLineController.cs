@@ -93,6 +93,13 @@ namespace RzrSite.Admin.Controllers
       return RedirectToAction("Edit", "Category", new { categoryId });
     }
 
+    [HttpGet("[action]/{id}")]
+    public async Task<IActionResult> FeatureTable(int categoryId, int id)
+    {
+      var pLine = await _repo.GetProductLine(categoryId, id);
+      return View(pLine);
+    }
+
     [HttpGet("[action]")]
     public IActionResult NavigateBackwards(int categoryId)
     {

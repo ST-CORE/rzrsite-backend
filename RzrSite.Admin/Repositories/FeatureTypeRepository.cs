@@ -15,10 +15,10 @@ namespace RzrSite.Admin.Repositories
   {
     HttpClient _client = new HttpClient(); 
 
-    public async Task<AddedFeatureType> AddFeatureType(PostFeatureType postModel)
+    public async Task<AddedFeatureType> AddFeatureType(int categoryId, PostFeatureType postModel)
     {
       var stringifiedObject = JsonConvert.SerializeObject(postModel);
-      var response = await _client.PostAsync($"{UrlLocator.ApiUrl}/FeatureType", new StringContent(stringifiedObject, Encoding.Default, "application/json"));
+      var response = await _client.PostAsync($"{UrlLocator.ApiUrl}/Category/{categoryId}/FeatureType", new StringContent(stringifiedObject, Encoding.Default, "application/json"));
       if (response.IsSuccessStatusCode)
       {
         var resultString = await response.Content.ReadAsStringAsync();
@@ -28,9 +28,9 @@ namespace RzrSite.Admin.Repositories
       return null;
     }
 
-    public async Task<FeatureType> GetFeatureType(int id)
+    public async Task<FeatureType> GetFeatureType(int categoryId, int id)
     {
-      var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/FeatureType/{id}");
+      var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/Category/{categoryId}/FeatureType/{id}");
       if (response.IsSuccessStatusCode)
       {
         var resultString = await response.Content.ReadAsStringAsync();
@@ -40,9 +40,9 @@ namespace RzrSite.Admin.Repositories
       return null;
     }
 
-    public async Task<IList<FeatureType>> GetAllFeatureTypes()
+    public async Task<IList<FeatureType>> GetAllFeatureTypes(int categoryId)
     {
-      var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/FeatureType");
+      var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/Category/{categoryId}/FeatureType");
       if (response.IsSuccessStatusCode)
       {
         var resultString = await response.Content.ReadAsStringAsync();
@@ -52,9 +52,9 @@ namespace RzrSite.Admin.Repositories
       return null;
     }
 
-    public async Task<bool> RemoveFeatureType(int id)
+    public async Task<bool> RemoveFeatureType(int categoryId, int id)
     {
-      var response = await _client.DeleteAsync($"{UrlLocator.ApiUrl}/FeatureType/{id}");
+      var response = await _client.DeleteAsync($"{UrlLocator.ApiUrl}/Category/{categoryId}/FeatureType/{id}");
       if (response.IsSuccessStatusCode)
       {
         return true;
@@ -63,10 +63,10 @@ namespace RzrSite.Admin.Repositories
       return false;
     }
 
-    public async Task<FeatureType> UpdateFeatureType(int id, PutFeatureType putModel)
+    public async Task<FeatureType> UpdateFeatureType(int categoryId, int id, PutFeatureType putModel)
     {
       var stringifiedObject = JsonConvert.SerializeObject(putModel);
-      var response = await _client.PutAsync($"{UrlLocator.ApiUrl}/FeatureType/{id}", new StringContent(stringifiedObject, Encoding.Default, "application/json"));
+      var response = await _client.PutAsync($"{UrlLocator.ApiUrl}/Category/{categoryId}/FeatureType/{id}", new StringContent(stringifiedObject, Encoding.Default, "application/json"));
       if (response.IsSuccessStatusCode)
       {
         var resultString = await response.Content.ReadAsStringAsync();

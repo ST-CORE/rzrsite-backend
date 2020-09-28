@@ -51,41 +51,54 @@
         <div class="form-group form-row">
           <label class="col-md-2 control-label">Продукты</label>
           <div class="col-md-10">
-              @await Component.InvokeAsync("Product", new { categoryId = categoryId, productLineId = Model.Id })
-              <div class="row">
-                <div class="offset-8 col-md-4">
-                  <a asp-action="Add" asp-controller="Product" asp-route-categoryId="@categoryId" asp-route-productLineId="@Model.Id" class="btn btn-block btn-success">
-                    Добавить
-                  </a>
-                </div>
+            @await Component.InvokeAsync("Product", new { categoryId = categoryId, productLineId = Model.Id })
+            <div class="row">
+              <div class="offset-8 col-md-4">
+                <a asp-action="Add" asp-controller="Product" asp-route-categoryId="@categoryId" asp-route-productLineId="@Model.Id" class="btn btn-block btn-success">
+                  Добавить
+                </a>
               </div>
             </div>
+          </div>
         </div>
         <div class="form-group form-row">
           <label class="col-md-2 control-label">Преимущества</label>
           <div class="col-md-10">
-              @await Component.InvokeAsync("Advantage", new { categoryId, productLineId })
-              <div class="row">
-                <div class="offset-8 col-md-4">
-                  <a asp-action="Add" asp-controller="Advantage" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" class="btn btn-block btn-success">
-                    Добавить
-                  </a>
-                </div>
+            @await Component.InvokeAsync("Advantage", new { categoryId, productLineId })
+            <div class="row">
+              <div class="offset-8 col-md-4">
+                <a asp-action="Add" asp-controller="Advantage" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" class="btn btn-block btn-success">
+                  Добавить
+                </a>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Характеристики продуктов</label>
+          <div class="col-md-10">
+            <div class="row">
+              <div class="offset-8 col-md-4">
+                <a asp-action="FeatureTable" asp-controller="ProductLine" asp-route-categoryId="@categoryId" asp-route-id="@productLineId" class="btn btn-block btn-success">
+                  Перейти к таблице
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="form-group form-row">
           <label class="col-md-2 control-label">Документы</label>
           @*<div class="col-md-10">
-              @await Component.InvokeAsync("ProductLines", new { categoryId = Model.Id })
-              <div class="row">
-                <div class="offset-8 col-md-4">
-                  <button class="btn btn-block btn-success">
-                    Добавить
-                  </button>
-                </div>
-              </div>
-            </div>*@
+        @await Component.InvokeAsync("ProductLines", new { categoryId = Model.Id })
+        <div class="row">
+          <div class="offset-8 col-md-4">
+            <button class="btn btn-block btn-success">
+              Добавить
+            </button>
+          </div>
+        </div>
+      </div>*@
+          <h3>В разработке >_<</h3>
         </div>
         <div class="form-group form-row">
           <div class="col-md-6">

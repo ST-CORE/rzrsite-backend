@@ -41,6 +41,11 @@ namespace RzrSite.DAL.Repositories.Interfaces
     /// <param name="id">Id of product line to remove</param>
     /// <returns>True if prouct line was removed or not found; False - if not empty;</returns>
     bool Delete(int categoryId, int id);
-
+    /// <summary>
+    /// Checks if feature type exists
+    /// </summary>
+    /// <param name="id">Id of a product line to look for</param>
+    /// <returns>True - if feature type is found; False - if not;</returns>
+    bool Exists(int id);
   }
 }

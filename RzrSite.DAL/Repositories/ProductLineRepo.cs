@@ -101,5 +101,10 @@ namespace RzrSite.DAL.Repositories
       _ctx.SaveChanges();
       return true;
     }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public bool Exists(int id) => (_ctx.ProductLines.Where(pl => pl.Id == id) != null);
   }
 }

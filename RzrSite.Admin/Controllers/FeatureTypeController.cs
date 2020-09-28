@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace RzrSite.Admin.Controllers
 {
   [Authorize]
-  [Route("[controller]")]
+  [Route("/Category/{categoryId}/[controller]")]
   public class FeatureTypeController: Controller
   {
     IFeatureTypeRepository _fileTypeRepo { get; set; }
@@ -19,42 +19,42 @@ namespace RzrSite.Admin.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int categoryId)
     {
-      IList<FeatureType> model = await _fileTypeRepo.GetAllFeatureTypes();
+      IList<FeatureType> model = await _fileTypeRepo.GetAllFeatureTypes(categoryId);
       if (model == null)
         model = new List<FeatureType>();
       return View(model);
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> Add(PostFeatureType postModel)
+    public async Task<IActionResult> Add(int categoryId, PostFeatureType postModel)
     {
-      await _fileTypeRepo.AddFeatureType(postModel);
-      return RedirectToAction("Index");
+      await _fileTypeRepo.AddFeatureType(categoryId, postModel);
+      return RedirectToAction("Index", new { categoryId });
     }
 
     [HttpGet("{id}/[action]")]
-    public async Task<IActionResult> Edit(int id)
+    public async Task<IActionResult> Edit(int categoryId, int id)
     {
-      var model = await _fileTypeRepo.GetFeatureType(id);
+      var model = await _fileTypeRepo.GetFeatureType(categoryId, id);
       return View(model);
     }
 
 
     [HttpPost("{id}/[action]")]
-    public async Task<IActionResult> Edit(int id, PutFeatureType putModel)
+    public async Task<IActionResult> Edit(int categoryId, int id, PutFeatureType putModel)
     {
-      var model = await _fileTypeRepo.UpdateFeatureType(id, putModel);
+      var model = await _fileTypeRepo.UpdateFeatureType(categoryId, id, putModel);
       return View(model);
     }
 
 
     [HttpGet("{id}/[action]")]
-    public async Task<IActionResult> Remove(int id)
+    public async Task<IActionResult> Remove(int categoryId, int id)
     {
-      await _fileTypeRepo.RemoveFeatureType(id);
-      return RedirectToAction("Index");
+      await _fileTypeRepo.RemoveFeatureType(categoryId, id);
+      return RedirectToAction("Index", new { categoryId });
     }
   }
 }

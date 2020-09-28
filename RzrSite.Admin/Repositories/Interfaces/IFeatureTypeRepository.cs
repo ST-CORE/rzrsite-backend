@@ -8,10 +8,10 @@ namespace RzrSite.Admin.Repositories.Interfaces
 {
   public interface IFeatureTypeRepository
   {
-    Task<IList<FeatureType>> GetAllFeatureTypes();
-    Task<FeatureType> GetFeatureType(int id);
-    Task<AddedFeatureType> AddFeatureType(PostFeatureType postModel);
-    Task<FeatureType> UpdateFeatureType(int id, PutFeatureType putModel);
-    Task<bool> RemoveFeatureType(int id);
+    Task<IList<FeatureType>> GetAllFeatureTypes(int categoryId);
+    Task<FeatureType> GetFeatureType(int categoryId, int id);
+    Task<AddedFeatureType> AddFeatureType(int categoryId, PostFeatureType postModel);
+    Task<FeatureType> UpdateFeatureType(int categoryId, int id, PutFeatureType putModel);
+    Task<bool> RemoveFeatureType(int categoryId, int id);
   }
 }

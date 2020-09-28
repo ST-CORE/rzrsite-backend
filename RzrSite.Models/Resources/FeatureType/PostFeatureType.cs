@@ -5,5 +5,6 @@ namespace RzrSite.Models.Resources.FeatureType
   public class PostFeatureType: IPostFeatureType
   {
     public string Name { get; set; }
+    public string Units { get; set; }
   }
 }
