@@ -17,7 +17,7 @@ namespace RzrSite.Admin.ViewModels.FeatureGroups
       Products = products.OrderBy(p => p.Id).ToList();
       FeaturesByType = featureTypes.Select(ft => new FeatureList
       {
-        Features = features.Where(f => f.TypeId == ft.Id).Select(p => p as IFeature).OrderBy(f => f.ProductId).ToList(),
+        Features = features.Where(f => f.TypeId == ft.Id).Select(p => p).OrderBy(f => f.ProductId).ToList(),
         FeatureTypeId = ft.Id,
         FeatureTypeName = ft.Name
       }).ToList();

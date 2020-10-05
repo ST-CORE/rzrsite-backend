@@ -4,38 +4,39 @@ using RzrSite.Admin.ViewModels.FeatureGroups;
 using RzrSite.Models.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using RzrSite.Models.Resources.Feature;
 
 namespace RzrSite.Admin.ViewComponents
 {
-  public class FeatureGroupViewComponent: ViewComponent
-  {
-    IFeatureRepository _repo { get; }
-    IFeatureTypeRepository _fTypeRepo { get; }
-    IProductRepository _productRepo { get; }
-
-
-    public FeatureGroupViewComponent(IFeatureRepository repo, IFeatureTypeRepository fTypeRepo, IProductRepository productRepo)
+    public class FeatureGroupViewComponent : ViewComponent
     {
-      _repo = repo;
-      _fTypeRepo = fTypeRepo;
-      _productRepo = productRepo;
-    }
+        IFeatureRepository _repoFeature { get; }
+        IFeatureTypeRepository _fTypeRepo { get; }
+        IProductRepository _productRepo { get; }
 
-    public async Task<IViewComponentResult> InvokeAsync(int categoryId, int productLineId)
-    {
-      var featureTypes = await _fTypeRepo.GetAllFeatureTypes(categoryId);
-      var products = await _productRepo.GetProducts(categoryId, productLineId);
-      var features = new List<Feature>();
-      foreach (var product in products)
-      {
-        var prodFeatures = await _repo.GetFeatures(product.Id);
-        if (prodFeatures != null)
+
+        public FeatureGroupViewComponent(IFeatureRepository repo, IFeatureTypeRepository fTypeRepo, IProductRepository productRepo)
         {
-          features.AddRange(prodFeatures);
+            _repoFeature = repo;
+            _fTypeRepo = fTypeRepo;
+            _productRepo = productRepo;
         }
-      }
-      var viewModel = new ListViewModel(products, features, featureTypes, productLineId);
-      return View(viewModel);
+
+        public async Task<IViewComponentResult> InvokeAsync(int categoryId, int productLineId)
+        {
+            var featureTypes = await _fTypeRepo.GetAllFeatureTypes(categoryId);
+            var products = await _productRepo.GetProducts(categoryId, productLineId);
+            var features = new List<Feature>();
+            foreach (var product in products)
+            {
+                var prodFeatures = await _repoFeature.GetFeatures(product.Id);
+                if (prodFeatures != null)
+                {
+                    features.AddRange(prodFeatures);
+                }
+            }
+            var viewModel = new ListViewModel(products, features, featureTypes, productLineId);
+            return View(viewModel);
+        }
     }
-  }
 }

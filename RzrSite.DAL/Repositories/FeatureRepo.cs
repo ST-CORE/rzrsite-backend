@@ -61,7 +61,31 @@ namespace RzrSite.DAL.Repositories
       return _ctx.Features.Find(id);
     }
 
-    public IEnumerable<IFeature> GetAll(int productId)
+    public IFeature Get(int productId, int id, int featureTypeId)
+    {
+        if (!_ctx.Products.Any(c => c.Id == productId))
+            throw new EntityNotFoundException($"Product :{productId}: not found!");
+
+        if (!_ctx.Features.Any(f => f.Id == id && f.ProductId == productId))
+        {
+            var feature = _ctx.Features.FirstOrDefault(x => x.Id == id);
+            if (feature == null)
+            {
+                _ctx.Features.Add(new Feature
+                {
+                    ProductId = productId,
+                    Weight = 0,
+                    Value = "0",
+                    TypeId = featureTypeId
+                });
+                _ctx.SaveChanges();
+            }
+        }
+
+        return _ctx.Features.Find(id);
+    }
+
+        public IEnumerable<IFeature> GetAll(int productId)
     {
       if (!_ctx.Products.Any(c => c.Id == productId))
         throw new EntityNotFoundException($"Product :{productId}: not found!");

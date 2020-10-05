@@ -51,7 +51,19 @@ namespace RzrSite.Admin.Repositories
       return null;
     }
 
-    public async Task<bool> RemoveProductLine(int categoryId, int id)
+    public async Task<IList<ProductLineDocument>> GetProductLineDocuments(int categoryId, int productLineId)
+    {
+        var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/category/{categoryId}/productline/{productLineId}/documents");
+        if (response.IsSuccessStatusCode)
+        {
+            var resultString = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<IList<ProductLineDocument>>(resultString);
+        }
+
+        return null;
+    }
+
+        public async Task<bool> RemoveProductLine(int categoryId, int id)
     {
       var response = await _client.DeleteAsync($"{UrlLocator.ApiUrl}/category/{categoryId}/productline/{id}");
       if (response.IsSuccessStatusCode)

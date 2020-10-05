@@ -1,6 +1,7 @@
 ﻿using RzrSite.Models.Entities.Interfaces;
 using RzrSite.Models.Resources.ProductLine.Interfaces;
 using System.Collections.Generic;
+using RzrSite.Models.Entities;
 
 namespace RzrSite.DAL.Repositories.Interfaces
 {
@@ -47,5 +48,7 @@ namespace RzrSite.DAL.Repositories.Interfaces
     /// <param name="id">Id of a product line to look for</param>
     /// <returns>True - if feature type is found; False - if not;</returns>
     bool Exists(int id);
+
+    List<IDocument> GetDocuments(int productLineId);
   }
 }

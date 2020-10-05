@@ -6,6 +6,7 @@ using RzrSite.Models.Entities.Interfaces;
 using RzrSite.Models.Resources.ProductLine.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace RzrSite.DAL.Repositories
 {
@@ -106,5 +107,11 @@ namespace RzrSite.DAL.Repositories
     /// <inheritdoc/>
     /// </summary>
     public bool Exists(int id) => (_ctx.ProductLines.Where(pl => pl.Id == id) != null);
+
+    public List<IDocument> GetDocuments(int productLineId)
+    {
+        var productLine = _ctx.ProductLines.Include(x => x.Documents).FirstOrDefault(x => x.Id == productLineId);
+        return productLine == null ? new List<IDocument>() : productLine.Documents.ToList();
+    }
   }
 }

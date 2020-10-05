@@ -19,13 +19,16 @@ namespace RzrSite.DAL.Repositories.Interfaces
     /// <param name="id">Id of feature</param>
     /// <returns>Category</returns>
     IFeature Get(int productId, int id);
+
+    IFeature Get(int productId, int id, int featureTypeId);
+
     /// <summary>
     /// Adds new feature by POST resource representation
     /// </summary>
     /// <param name="productId">Id of a product</param>
     /// <param name="feature">POST resource representation</param>
     /// <returns>Id of added feature type</returns>
-    int? Add(int productId, IPostFeature feature);
+        int? Add(int productId, IPostFeature feature);
     /// <summary>
     /// Updates existing feature type by PUT resource representation
     /// </summary>

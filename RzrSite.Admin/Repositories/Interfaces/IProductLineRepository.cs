@@ -9,6 +9,7 @@ namespace RzrSite.Admin.Repositories.Interfaces
   {
     Task<FullProductLine> GetProductLine(int categoryId, int productLineid);
     Task<IList<StrippedProductLine>> GetProductLines(int categoryId);
+    Task<IList<ProductLineDocument>> GetProductLineDocuments(int categoryId, int productLineId);
     Task<bool> RemoveProductLine(int categoryId, int id);
     Task<AddedProductLine> AddProductLine(int categoryId, PostProductLine postProductLine);
     Task<StrippedProductLine> UpdateProductLine(int categoryId, int id, PutProductLine putProductLine);

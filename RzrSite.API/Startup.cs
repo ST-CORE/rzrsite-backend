@@ -14,66 +14,67 @@ using RzrSite.Models.Responses.DbFile;
 
 namespace RzrSite.API
 {
-  public class Startup
-  {
-    public IConfiguration Configuration;
-
-    public Startup(IConfiguration configuration)
+    public class Startup
     {
-      Configuration = configuration;
-    }
+        public IConfiguration Configuration;
 
-    public void ConfigureServices(IServiceCollection services)
-    {
-      services.AddAutoMapper(typeof(RzrSiteDbContext), typeof(AddedDbFile));
-
-      services.AddCors();
-
-      services.Configure<ForwardedHeadersOptions>(options =>
-      {
-        options.ForwardedHeaders =
-            ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-      });
-
-      services.AddControllers(options =>
+        public Startup(IConfiguration configuration)
         {
-          options.Filters.Add(new EntityNotFoundFilter());
-          options.Filters.Add(new InconsistentStructureFilter());
-        });
+            Configuration = configuration;
+        }
 
-      services.AddScoped<ICategoryRepo, CategoryRepo>();
-      services.AddScoped<IProductLineRepo, ProductLineRepo>();
-      services.AddScoped<IDbFileRepo, DbFileRepo>();
-      services.AddScoped<IProductRepo, ProductRepo>();
-      services.AddScoped<IAdvantageRepo, AdvantageRepo>();
-      services.AddScoped<IImageRepo, ImageRepo>();
-      services.AddScoped<IFeatureTypeRepo, FeatureTypeRepo>();
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(RzrSiteDbContext), typeof(AddedDbFile));
 
-      services.AddDbContext<RzrSiteDbContext>();
+            services.AddCors();
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+              ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
+
+            services.AddControllers(options =>
+              {
+                  options.Filters.Add(new EntityNotFoundFilter());
+                  options.Filters.Add(new InconsistentStructureFilter());
+              });
+
+            services.AddScoped<ICategoryRepo, CategoryRepo>();
+            services.AddScoped<IProductLineRepo, ProductLineRepo>();
+            services.AddScoped<IDbFileRepo, DbFileRepo>();
+            services.AddScoped<IProductRepo, ProductRepo>();
+            services.AddScoped<IFeatureRepo, FeatureRepo>();
+            services.AddScoped<IAdvantageRepo, AdvantageRepo>();
+            services.AddScoped<IImageRepo, ImageRepo>();
+            services.AddScoped<IFeatureTypeRepo, FeatureTypeRepo>();
+
+            services.AddDbContext<RzrSiteDbContext>();
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
+            app.UseCors(
+              options => options.WithOrigins("http://rzrsite-backend.ru", "http://rzrsite.cashtusk.ru")
+                                .AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials()
+            );
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
     }
-
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-      else
-      {
-        app.UseExceptionHandler("/Error");
-      }
-      app.UseCors(
-        options => options.WithOrigins("http://rzrsite-backend.ru", "http://rzrsite.cashtusk.ru")
-                          .AllowAnyMethod()
-                          .AllowAnyHeader()
-                          .AllowCredentials()
-      );
-
-      app.UseRouting();
-      app.UseEndpoints(endpoints =>
-      {
-        endpoints.MapControllers();
-      });
-    }
-  }
 }

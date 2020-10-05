@@ -25,6 +25,7 @@ namespace RzrSite.API.Controllers
       _featureTypeRepo = featureTypeRepo;
       _repo = repo;
       _productRepo = productRepo;
+      _productLineRepo = productLineRepo;
     }
 
     [HttpGet("{id}")]
@@ -90,7 +91,7 @@ namespace RzrSite.API.Controllers
       if (!_featureTypeRepo.Exists(productLine.CategoryId, model.FeatureTypeId))
         return BadRequest($"Feature Type :{model.FeatureTypeId}: does not exist");
 
-      var found = _repo.Get(productId, id) != null;
+      var found = _repo.Get(productId, id, model.FeatureTypeId) != null;
       if (!found) return NotFound();
 
       var featureType = _repo.Update(productId, id, model);
