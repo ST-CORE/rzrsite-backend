@@ -35,7 +35,7 @@ namespace RzrSite.Admin.ViewComponents
                     features.AddRange(prodFeatures);
                 }
             }
-            var viewModel = new ListViewModel(products, features, featureTypes, productLineId);
+            var viewModel = new ListViewModel(products, features, featureTypes, productLineId, categoryId);
             return View(viewModel);
         }
     }

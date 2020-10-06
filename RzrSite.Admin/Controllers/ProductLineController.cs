@@ -115,7 +115,7 @@ namespace RzrSite.Admin.Controllers
                     Weight = 0
                 });
             }
-            return NavigateBackwards(model.CategoryId);
+            return RedirectToAction("Edit", "ProductLine", new { categoryId = model.CategoryId, id = model.ProductLineId });
         }
 
         [HttpGet("[action]")]

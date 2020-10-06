@@ -5,39 +5,41 @@
 }
 
 <form method="post">
+    @Html.HiddenFor(x => x.CategoryId)
+    @Html.HiddenFor(x => x.ProductLineId)
     <table class="table flex-fill">
         <thead>
-        <tr>
-            <th>
-                Характеристика
-            </th>
-            @foreach (var product in Model.Products)
-            {
-                <th>
-                    @product.Name
-                </th>
-            }
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var ftype in Model.FeaturesByType)
-        {
             <tr>
-                <td>
-                    @ftype.FeatureTypeName
-                </td>
-                @foreach (var productFeature in ftype.Features)
+                <th>
+                    Характеристика
+                </th>
+                @foreach (var product in Model.Products)
                 {
-                    <td>
-                        <input type="hidden" name="items[@i].id" value="@productFeature.Id">
-                        <input type="hidden" name="items[@i].productId" value="@productFeature.ProductId">
-                        <input type="hidden" name="items[@i].typeId" value="@productFeature.TypeId">
-                        <input class="feature-table-input" name="items[@i].value" type="text" value="@productFeature.Value" />
-                    </td>
-                    i++;
+                    <th>
+                        @product.Name
+                    </th>
                 }
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var ftype in Model.FeaturesByType)
+            {
+                <tr>
+                    <td>
+                        @ftype.FeatureTypeName
+                    </td>
+                    @foreach (var productFeature in ftype.Features)
+                    {
+                        <td>
+                            <input type="hidden" name="items[@i].id" value="@productFeature.Id">
+                            <input type="hidden" name="items[@i].productId" value="@productFeature.ProductId">
+                            <input type="hidden" name="items[@i].typeId" value="@productFeature.TypeId">
+                            <input class="feature-table-input" name="items[@i].value" type="text" value="@productFeature.Value" />
+                        </td>
+                        i++;
+                    }
+                </tr>
+            }
         </tbody>
     </table>
     <div class="row">
