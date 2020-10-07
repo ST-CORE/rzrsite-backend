@@ -92,7 +92,7 @@
                         @await Component.InvokeAsync("Documents", new { productLineId = Model.Id, categoryId = Model.CategoryId })
                         <div class="row">
                             <div class="offset-8 col-md-4">
-                                <a asp-controller="Document" asp-action="Add" asp-route-id="@productLineId" class="btn btn-block btn-success">
+                                <a asp-controller="Document" asp-action="Add" asp-route-productLineId="@productLineId" asp-route-categoryId="@categoryId" class="btn btn-block btn-success">
                                     Добавить
                                 </a>
                             </div>

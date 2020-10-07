@@ -6,5 +6,6 @@ namespace RzrSite.Models.Resources.DbFile.Interfaces
   {
     FileFormat Format { get; set; }
     public byte[] Bytes { get; set; }
+    string Path { get; set; }
   }
 }

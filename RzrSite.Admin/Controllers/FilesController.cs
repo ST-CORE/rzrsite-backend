@@ -6,6 +6,7 @@ using RzrSite.Models.Converters;
 using RzrSite.Models.Resources.DbFile;
 using System.IO;
 using System.Threading.Tasks;
+using RzrSite.Models.Enums;
 
 namespace RzrSite.Admin.Controllers
 {
@@ -85,13 +86,29 @@ namespace RzrSite.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Download(int id, string contentType)
         {
-            var content = await _repo.GetFileContent(id);
+            var content = await _repo.GetStrippedFile(id);
             if (content == null)
             {
                 return await IndexWithError("File is null, beda-beda");
             }
 
-            return File(content, contentType);
+            var fileFormat = string.Empty;
+
+            switch (content.Format)
+            {
+                case FileFormat.Jpg:
+                case FileFormat.Png:
+                    fileFormat = "image/*";
+                    break;
+                case FileFormat.Pdf:
+                    fileFormat = "application/pdf";
+                    break;
+            }
+            
+            return new FileContentResult(content.Bytes, fileFormat)
+            {
+                FileDownloadName = content.Path
+            };
         }
 
         [HttpPost]

@@ -13,5 +13,6 @@ namespace RzrSite.Admin.Repository
     Task<bool> RemoveFile(int id);
     Task<AddedDbFile> AddFile(PostDbFile postFile);
     Task<StrippedDbFile> UpdateFile(int id, PutDbFile putFile);
+    Task<StrippedDbFile> GetStrippedFile(int id);
   }
 }
