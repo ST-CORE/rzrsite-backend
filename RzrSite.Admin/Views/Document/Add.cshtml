@@ -11,17 +11,21 @@
                     <label class="col-md-2 control-label">Описание</label>
                     <div class="col-md-10">
                         @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Description)
+                        <div>&nbsp;@Html.ValidationMessageFor(x => x.Description)</div>
                     </div>
                 </div>
                 <div class="form-group form-row">
                     <p>Выберите документ</p>
+                </div>
+                <div class="form-group form-row">
                     <p> @Html.ValidationMessageFor(x => x.FileId)</p>
+                </div>
+                <div class="form-group form-row">
                     @foreach (var item in Model.Files)
                     {
-                        <div class="radio">
-                            <label>@Html.RadioButtonFor(model => model.FileId, item.Id)&nbsp;@item.Path</label>
-                        </div>
+                    <div class="radio">
+                        <label>@Html.RadioButtonFor(model => model.FileId, item.Id)&nbsp;@item.Path</label>
+                    </div>
                     }
                 </div>
 
@@ -34,8 +38,8 @@
 
                 <div class="form-group form-row">
                     @*<div class="col-md-3">
-                <a class="col-md-6 offset-2" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" asp-route-productId="@productId" asp-action="NavigateBackwards">Назад</a>
-            </div>*@
+                            <a class="col-md-6 offset-2" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" asp-route-productId="@productId" asp-action="NavigateBackwards">Назад</a>
+                        </div>*@
                     <div class="col-md-9">
                         <button type="submit" class="btn btn-outline-info btn-block form-control">Создать</button>
                     </div>
