@@ -51,5 +51,44 @@ namespace RzrSite.Admin.Controllers
 
             return RedirectToAction("Edit", "ProductLine", new { categoryId = model.CategoryId, id = model.ProductLineId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id, int productLineId, int categoryId)
+        {
+            var document = await _productLineRepository.GetDocument(id);
+
+            var file = await _repo.GetFile(document.FileId);
+
+            return View(new DocumentViewModel
+            {
+                Weight = document.Weight,
+                Description = document.Description,
+                Id = document.Id,
+                ProductLineId = productLineId,
+                CategoryId = categoryId,
+                FilePath = file.Path
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(DocumentViewModel model)
+        {
+            await _productLineRepository.EditDocument(new PutDocument
+            {
+                Weight = model.Weight,
+                Description = model.Description,
+                Id = model.Id
+            });
+
+            return RedirectToAction("Edit", "ProductLine", new { categoryId = model.CategoryId, id = model.ProductLineId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id, int productLineId, int categoryId)
+        {
+            await _productLineRepository.DeleteDocument(id);
+
+            return RedirectToAction("Edit", "ProductLine", new { categoryId = categoryId, id = productLineId });
+        }
     }
 }

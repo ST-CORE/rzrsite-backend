@@ -1,16 +1,19 @@
-﻿@model List<RzrSite.Models.Responses.ProductLine.ProductLineDocument>
+﻿@model RzrSite.Models.Responses.ProductLine.ProductLineDocumentVm
 
-@foreach (var document in Model)
+@foreach (var document in Model.Documents)
 {
     <div class="row">
         <div class="col-md-2">
             @document.Description
         </div>
+        <div class="col-md-5">
+            {category-path}<b>@document.FilePath</b>
+        </div>
         <div class="col-md-3">
-            <a asp-action="Edit" asp-controller="Document" asp-route-id="@document.Id">Редактировать</a>
+            <a asp-action="Edit" asp-controller="Document" asp-route-id="@document.Id" asp-route-categoryId="@Model.CategoryId" asp-route-productLineId="@Model.ProductLineId">Редактировать</a>
         </div>
         <div class="col-md-2">
-            <a asp-action="Delete" asp-controller="Document" asp-route-id="@document.Id">Удалить</a>
+            <a asp-action="Delete" asp-controller="Document" asp-route-id="@document.Id" asp-route-categoryId="@Model.CategoryId" asp-route-productLineId="@Model.ProductLineId">Удалить</a>
         </div>
     </div>
     <hr />

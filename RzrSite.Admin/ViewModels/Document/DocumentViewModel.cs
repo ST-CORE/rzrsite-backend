@@ -7,6 +7,8 @@ namespace RzrSite.Admin.ViewModels.Document
 {
     public class DocumentViewModel
     {
+        public int Id { get; set; }
+
         [Range(1, int.MaxValue, ErrorMessage = "Пожалуйста, выберите категорию")]
         public int CategoryId { get; set; }
         
@@ -21,6 +23,8 @@ namespace RzrSite.Admin.ViewModels.Document
         public string Description { get; set; }
 
         public int Weight { get; set; } = 0;
+
+        public string FilePath { get; set; }
 
         public DocumentViewModel()
         {

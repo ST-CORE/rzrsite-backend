@@ -18,8 +18,8 @@ namespace RzrSite.Models.Entities
     public string Name { get; set; }
     public string Description { get; set; }
     public int Weight { get; set; }
-    public IList<IAdvantage> Advantages { get; set; }
-    public IList<IDocument> Documents { get; set; }
-    public IList<IProduct> Products { get; set; }
+    public IList<IAdvantage> Advantages { get; set; } = new List<IAdvantage>();
+    public IList<IDocument> Documents { get; set; } = new List<IDocument>();
+    public IList<IProduct> Products { get; set; } = new List<IProduct>();
   }
 }
