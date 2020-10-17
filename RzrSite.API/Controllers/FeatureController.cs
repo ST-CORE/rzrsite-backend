@@ -122,15 +122,8 @@ namespace RzrSite.API.Controllers
         {
             var featureTypes = _featureTypeRepo.GetAll(categoryId) as List<FeatureType>;
 
-            var products = _productRepo.GetAll(productLineId).Select(x => new Product
-            {
-                Weight = x.Weight,
-                Id = x.Id,
-                Price = x.Price,
-                Name = x.Name,
-                Title = x.Title
-            }).ToList();
-            
+            var products = _mapper.Map<IList<Product>>(_productRepo.GetAll(productLineId));
+
             var features = new List<Feature>();
             foreach (var product in products)
             {
