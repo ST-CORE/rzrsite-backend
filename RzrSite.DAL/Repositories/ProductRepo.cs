@@ -20,6 +20,7 @@ namespace RzrSite.DAL.Repositories
       _mapper = mapper;
     }
 
+    /// <inheritdoc/>
     public int? Add(int productLineId, IPostProduct product)
     {
       if (!_ctx.ProductLines.Any(c => c.Id == productLineId))
@@ -33,6 +34,7 @@ namespace RzrSite.DAL.Repositories
       return result.Entity?.Id;
     }
 
+    /// <inheritdoc/>
     public bool Delete(int productLineId, int id)
     {
       if (!_ctx.ProductLines.Any(c => c.Id.Equals(productLineId)))
@@ -58,11 +60,16 @@ namespace RzrSite.DAL.Repositories
       return true;
     }
 
+    /// <inheritdoc/>
     public IProduct Get(int id)
     {
+      if (!_ctx.Products.Any(p => p.Id == id))
+        throw new EntityNotFoundException($"Product :{id}: not found!");
+
       return _ctx.Products.First(p => p.Id == id);
     }
 
+    /// <inheritdoc/>
     public IProduct Get(int productLineId, int id)
     {
       if (!_ctx.ProductLines.Any(c => c.Id == productLineId))
@@ -77,6 +84,7 @@ namespace RzrSite.DAL.Repositories
       return _ctx.Products.First(p => p.Id == id);
     }
 
+    /// <inheritdoc/>
     public IEnumerable<IProduct> GetAll(int productLineId)
     {
       if (!_ctx.ProductLines.Any(c => c.Id == productLineId))
@@ -85,6 +93,7 @@ namespace RzrSite.DAL.Repositories
       return _ctx.Products.Where(p => p.ProductLineId == productLineId).ToList();
     }
 
+    /// <inheritdoc/>
     public IProduct Update(int productLineId, int id, IPutProduct product)
     {
       var entity = _ctx.Products.Find(id);
@@ -103,5 +112,8 @@ namespace RzrSite.DAL.Repositories
 
       return entity;
     }
+
+    /// <inheritdoc/>
+    public bool Exists(int id) => (_ctx.Products.Find(id) != null);
   }
 }

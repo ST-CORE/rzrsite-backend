@@ -17,6 +17,10 @@
     <Compile Remove="Migrations\20200524133130_Advantages.Designer.cs" />
     <Compile Remove="Migrations\20200524223908_Advantages.cs" />
     <Compile Remove="Migrations\20200524223908_Advantages.Designer.cs" />
+    <Compile Remove="Migrations\20200728204424_version1.2.cs" />
+    <Compile Remove="Migrations\20200728204424_version1.2.Designer.cs" />
+    <Compile Remove="Migrations\20200728204712_version1.2.cs" />
+    <Compile Remove="Migrations\20200728204712_version1.2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

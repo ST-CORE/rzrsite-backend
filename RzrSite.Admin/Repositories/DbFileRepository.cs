@@ -50,7 +50,19 @@ namespace RzrSite.Admin.Repository
       return null;
     }
 
-    public async Task<IList<StrippedDbFile>> GetFileList()
+    public async Task<StrippedDbFile> GetStrippedFile(int id)
+    {
+        var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/dbfile/content/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            var resultString = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<StrippedDbFile>(resultString);
+            return data;
+        }
+        return null;
+    }
+
+        public async Task<IList<StrippedDbFile>> GetFileList()
     {
       var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/dbfile");
       if (response.IsSuccessStatusCode)

@@ -1,0 +1,88 @@
+﻿@model RzrSite.Admin.ViewModels.FeatureGroups.ListViewModel
+
+@{
+    var i = 0;
+}
+
+<form method="post">
+    @Html.HiddenFor(x => x.CategoryId)
+    @Html.HiddenFor(x => x.ProductLineId)
+    <table class="table flex-fill">
+        <thead>
+            <tr>
+                <th>
+                    Характеристика
+                </th>
+                @foreach (var product in Model.Products)
+                {
+                    <th>
+                        @product.Name
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ftype in Model.FeaturesByType)
+            {
+                <tr>
+                    <td>
+                        @ftype.FeatureTypeName
+                    </td>
+                    @foreach (var productFeature in ftype.Features)
+                    {
+                        <td>
+                            <input type="hidden" name="items[@i].id" value="@productFeature.Id">
+                            <input type="hidden" name="items[@i].productId" value="@productFeature.ProductId">
+                            <input type="hidden" name="items[@i].typeId" value="@productFeature.TypeId">
+                            <input class="feature-table-input" name="items[@i].value" type="text" value="@productFeature.Value" />
+                        </td>
+                        i++;
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="offset-8 col-md-4">
+            <input class="btn btn-block btn-success" value="Сохранить всё" type="submit" />
+        </div>
+    </div>
+</form>
+
+
+
+@*<script>
+  var formJson = function () {
+    let retObject = {
+      "productLineId": @Model.ProductLineId,
+      "features": []
+    };
+
+    var features = document.getElementsByClassName('feature-table-input');
+    for (let i = 0; i < features.length; i++) {
+      let featureInput = features[i];
+
+      retObject.features.push({
+        "productId": featureInput.getAttribute("data-productid"),
+        "featureTypeId": featureInput.getAttribute("data-productid"),
+        "value": featureInput.value
+      });
+    };
+
+    console.log(JSON.stringify(retObject));
+
+    return;
+  }
+
+  var sendRequest = function(jsonString) {
+    var xhr = new XMLHttpRequest();
+    var url = "url";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      Location.reload();
+    };
+
+    xhr.send(jsonString);
+  }
+</script>*@

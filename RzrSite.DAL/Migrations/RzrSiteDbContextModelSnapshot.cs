@@ -143,7 +143,13 @@ namespace RzrSite.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Units")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -201,9 +207,6 @@ namespace RzrSite.DAL.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PrimaryImageId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("ProductLineId")
                         .HasColumnType("INTEGER");
 
@@ -214,9 +217,6 @@ namespace RzrSite.DAL.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PrimaryImageId")
-                        .IsUnique();
 
                     b.HasIndex("ProductLineId");
 
@@ -303,10 +303,6 @@ namespace RzrSite.DAL.Migrations
 
             modelBuilder.Entity("RzrSite.Models.Entities.Product", b =>
                 {
-                    b.HasOne("RzrSite.Models.Entities.Image", "PrimaryImage")
-                        .WithOne()
-                        .HasForeignKey("RzrSite.Models.Entities.Product", "PrimaryImageId");
-
                     b.HasOne("RzrSite.Models.Entities.ProductLine", null)
                         .WithMany("Products")
                         .HasForeignKey("ProductLineId")

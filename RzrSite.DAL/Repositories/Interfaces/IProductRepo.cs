@@ -45,7 +45,13 @@ namespace RzrSite.DAL.Repositories.Interfaces
     /// </summary>
     /// <param name="productLineId">Id of parent productLine</param>
     /// <param name="id">Id of product to remove</param>
-    /// <returns>True if product was removed or not found; False - if not empty;</returns>
+    /// <returns>True if product was removed or not found; False - if not empty</returns>
     bool Delete(int productLineId, int id);
+    /// <summary>
+    /// Check if product with given id exists. 
+    /// </summary>
+    /// <param name="id">Id of a product to look for</param>
+    /// <returns>True if product was found; False - if not</returns>
+    bool Exists(int id);
   }
 }

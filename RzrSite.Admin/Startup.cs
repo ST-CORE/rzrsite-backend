@@ -44,6 +44,8 @@ namespace RzrSite.Admin
       services.AddScoped<IDbFileRepository, DbFileRepository>();
       services.AddScoped<IAdvantageRepository, AdvantageRepository>();
       services.AddScoped<IImageRepository, ImageRepository>();
+      services.AddScoped<IFeatureTypeRepository, FeatureTypeRepository>();
+      services.AddScoped<IFeatureRepository, FeatureRepository>();
 
       services.AddDbContext<AdminDbContext>();
     }

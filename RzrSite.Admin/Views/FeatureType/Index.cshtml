@@ -1,0 +1,69 @@
+﻿@model List<RzrSite.Models.Entities.FeatureType>
+@{
+  ViewData["Title"] = "Типы параметров, всё такое";
+}
+@{ 
+  var categoryId = Convert.ToInt32(ViewContext.RouteData.Values["categoryId"]);
+}
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+  <table class="table flex-fill">
+    <thead>
+      <tr>
+        <th>
+          ID
+        </th>
+        <th>
+          Cat. ID
+        </th>
+        <th>
+          Название
+        </th>
+        <th>
+          Ед. Измерения
+        </th>
+        <th>
+          Действия
+        </th>
+      </tr>
+    </thead>
+
+    @foreach (var fType in Model)
+    {
+      <tr>
+        <td>
+          @fType.Id
+        </td>
+        <td>
+          @fType.CategoryId
+        </td>
+        <td>
+          @fType.Name
+        </td>
+        <td>
+          @fType.Units
+        </td>
+        <td>
+          <a href="/Category/@categoryId/FeatureType/@fType.Id/Edit">Редактировать</a>
+          <a href="/Category/@categoryId/FeatureType/@fType.Id/Remove">Удалить</a>
+        </td>
+      </tr>
+    }
+  </table>
+  <div class="col-md-12">
+    <form action="/Category/@categoryId/FeatureType/Add" method="post">
+      <div class="row">
+        <div class="col-md-3 offset-3">
+          <input type="text" class="form-control" name="Name" placeholder="Название" />
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control" name="Units" placeholder="Ед. измерения" />
+        </div>
+        <div class="col-md-3">
+          <input type="submit" class="btn btn-block btn-success" name="Добавить" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
