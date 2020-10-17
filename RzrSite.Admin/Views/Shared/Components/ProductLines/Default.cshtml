@@ -1,0 +1,20 @@
+﻿@model RzrSite.Admin.ViewModels.ProductLines.ListViewModel
+
+@foreach (var productLine in Model.ProductLines)
+{
+    <div class="row">
+        <div class="col-md-2">
+            @productLine.Name
+        </div>
+        <div class="col-md-5">
+            {category-path}<b>@productLine.Path</b>
+        </div>
+        <div class="col-md-3">
+            <a asp-action="Edit" asp-controller="ProductLine" asp-route-categoryId="@Model.CategoryId" asp-route-id="@productLine.Id">Редактировать</a>
+        </div>
+        <div class="col-md-2">
+            <a asp-action="Delete" asp-controller="ProductLine" asp-route-categoryId="@Model.CategoryId" asp-route-id="@productLine.Id">Удалить</a>
+        </div>
+    </div>
+    <hr />
+}

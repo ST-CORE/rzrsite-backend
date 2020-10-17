@@ -1,0 +1,14 @@
+﻿@model RzrSite.Models.Responses.ProductLine.FullProductLine
+@{
+  ViewData["Title"] = $"Характеристики линейки {Model.Name}";
+  var categoryId = Convert.ToInt32(ViewContext.RouteData.Values["categoryId"]);
+}
+
+
+<div class="row">
+  <div class="col-md-8">
+    <h2>@ViewData["Title"]</h2>
+
+    @await Component.InvokeAsync("FeatureGroup", new { categoryId = categoryId, productLineId = Model.Id })
+  </div>
+</div>

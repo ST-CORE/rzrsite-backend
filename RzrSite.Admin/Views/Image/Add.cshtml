@@ -1,0 +1,36 @@
+﻿@model RzrSite.Models.Resources.Image.PostImage
+@{
+  ViewData["Title"] = $"Добавление картинки продукта";
+  var categoryId = Convert.ToInt32(ViewContext.RouteData.Values["categoryId"]);
+  var productLineId = Convert.ToInt32(ViewContext.RouteData.Values["productLineId"]);
+  var productId = Convert.ToInt32(ViewContext.RouteData.Values["productId"]);
+}
+<div class="row">
+  <div class="col-md-8">
+    <h2>@ViewData["Title"]</h2>
+    <section>
+      <form asp-action="Add" method="post" class="border-info form-horizontal" role="form">
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Описание</label>
+          <div class="col-md-10">
+            <input type="text" name="@nameof(Model.Description)" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Вес</label>
+          <div class="col-md-10">
+            <input name="@nameof(Model.Weight)" type="text" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group form-row">
+          <div class="col-md-3">
+            <a class="col-md-6 offset-2" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" asp-route-productId="@productId" asp-action="NavigateBackwards">Назад</a>
+          </div>
+          <div class="col-md-9">
+            <button type="submit" class="btn btn-outline-info btn-block form-control">Создать</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

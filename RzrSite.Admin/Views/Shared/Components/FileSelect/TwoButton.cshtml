@@ -1,0 +1,34 @@
+﻿@model RzrSite.Admin.ViewModels.Files.SelectViewModel
+<hr />
+@if (Model.Files == null || !Model.Files.Any())
+{
+  <div class="row">
+    <div class="col-md-12">
+      <p>Нужно добавить файлы. Такие дела</p>
+    </div>
+  </div>
+}
+
+@foreach (var file in Model.Files)
+{
+  <div class="row">
+    <div class="col-md-1">
+      @file.Format
+    </div>
+    <div class="col-md-5">
+      {backend-url}<br /><b>@file.Path</b>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <a href="@Model.FirstButtonPrefix@file.Id">Назначить большой</a>
+      </div>
+      <div class="row">
+        <a href="@Model.SecondButtonPrefix@file.Id">Назначить малой</a>
+      </div>
+      <div class="row">
+        <a href="/Files/@file.Id/Edit">Редактировать</a>
+      </div>
+    </div>
+  </div>
+  <hr />
+}

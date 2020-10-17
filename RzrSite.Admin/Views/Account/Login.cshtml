@@ -1,0 +1,32 @@
+﻿@{
+  ViewData["Title"] = "Авторизация";
+}
+
+<div class="row">
+  <div class="col-md-6">
+    <h2>Авторизация</h2>
+    <section>
+      <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="border-info form-horizontal" role="form">
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Имя</label>
+          <div class="col-md-10">
+            <input type="text" name="username" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group form-row">
+          <label class="col-md-2 control-label">Пароль</label>
+          <div class="col-md-10">
+            <input type="password" name="password" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group form-row">
+          <div class="col-md-10 offset-2">
+            <button type="submit" class="btn btn-outline-info btn-block form-control">Войти</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model RzrSite.Admin.ViewModels.Document.DocumentViewModel
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Добавление документа</h2>
+        <section>
+            <form asp-action="Add" method="post" class="border-info form-horizontal" role="form">
+                @Html.HiddenFor(x => x.CategoryId)
+                @Html.HiddenFor(x => x.ProductLineId)
+                <div class="form-group form-row">
+                    <label class="col-md-2 control-label">Описание</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+                        <div>&nbsp;@Html.ValidationMessageFor(x => x.Description)</div>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <p>Выберите документ</p>
+                </div>
+                <div class="form-group form-row">
+                    <p> @Html.ValidationMessageFor(x => x.FileId)</p>
+                </div>
+                <div class="form-group form-row">
+                    @foreach (var item in Model.Files)
+                    {
+                    <div class="radio">
+                        <label>@Html.RadioButtonFor(model => model.FileId, item.Id)&nbsp;@item.Path</label>
+                    </div>
+                    }
+                </div>
+
+                <div class="form-group form-row">
+                    <label class="col-md-2 control-label">Вес</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(x => x.Weight, new { @class = "form-control", type = "number" })
+                    </div>
+                </div>
+
+                <div class="form-group form-row">
+                    @*<div class="col-md-3">
+                            <a class="col-md-6 offset-2" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" asp-route-productId="@productId" asp-action="NavigateBackwards">Назад</a>
+                        </div>*@
+                    <div class="col-md-9">
+                        <button type="submit" class="btn btn-outline-info btn-block form-control">Создать</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

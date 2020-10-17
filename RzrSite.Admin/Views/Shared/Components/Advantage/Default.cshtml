@@ -1,0 +1,17 @@
+﻿@model RzrSite.Admin.ViewModels.Advantage.ListViewModel
+
+@foreach (var advantage in Model.Advantages)
+{
+  <div class="row">
+    <div class="col-md-7">
+      @advantage.Title
+    </div>
+    <div class="col-md-3">
+      <a asp-action="Edit" asp-controller="Advantage" asp-route-categoryId="@Model.CategoryId" asp-route-productLineId="@Model.ProductLineId" asp-route-id="@advantage.Id">Редактировать</a>
+    </div>
+    <div class="col-md-2">
+      <a asp-action="Delete" asp-controller="Advantage" asp-route-categoryId="@Model.CategoryId" asp-route-productLineId="@Model.ProductLineId" asp-route-id="@advantage.Id">Удалить</a>
+    </div>
+  </div>
+  <hr />
+}

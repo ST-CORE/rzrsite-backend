@@ -1,0 +1,17 @@
+﻿@model RzrSite.Admin.ViewModels.Files.AddViewModel
+
+<form action="/Files/Add?backUrl=@Model.BackUrl" enctype="multipart/form-data" method="post" class="border-info" role="form">
+  <div class="row">
+    <div class="col-md-8">
+      <input asp-for="@Model.FormFile" type="file" class="btn-block btn-outline-info" /> <br />
+    </div>
+    <div class="col-md-4">
+      <input name="@nameof(Model.Path)" type="text" placeholder="Путь" />
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <input type="submit" class="btn btn-outline-info btn-block" value="Загрузить" />
+    </div>
+  </div>
+</form>
