@@ -50,6 +50,8 @@ namespace RzrSite.API
             services.AddScoped<IImageRepo, ImageRepo>();
             services.AddScoped<IFeatureTypeRepo, FeatureTypeRepo>();
 
+            services.AddSwaggerDocument();
+
             services.AddDbContext<RzrSiteDbContext>();
         }
 
@@ -69,6 +71,9 @@ namespace RzrSite.API
                                 .AllowAnyHeader()
                                 .AllowCredentials()
             );
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseRouting();
             app.UseEndpoints(endpoints =>

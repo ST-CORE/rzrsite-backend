@@ -1,7 +1,7 @@
 ﻿using RzrSite.Models.Entities;
 using System.Collections.Generic;
 
-namespace RzrSite.Admin.ViewModels.FeatureGroups
+namespace RzrSite.API.Models
 {
     public class FeatureList
     {
