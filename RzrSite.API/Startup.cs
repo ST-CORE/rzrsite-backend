@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RzrSite.API.Filters;
 using RzrSite.API.Middleware;
+using RzrSite.API.Services;
 using RzrSite.DAL;
 using RzrSite.DAL.Repositories;
 using RzrSite.DAL.Repositories.Interfaces;
@@ -51,6 +52,9 @@ namespace RzrSite.API
             services.AddScoped<IFeatureTypeRepo, FeatureTypeRepo>();
 
             services.AddSwaggerDocument();
+
+            services.Configure<EmailServiceConfig>(Configuration.GetSection("EmailService"));
+            services.AddTransient<IEmailService, EmailService>();
 
             services.AddDbContext<RzrSiteDbContext>();
         }
