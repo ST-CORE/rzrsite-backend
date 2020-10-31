@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using RzrSite.Models.Entities.Interfaces;
 
 namespace RzrSite.Models.Responses.ProductLine
 {

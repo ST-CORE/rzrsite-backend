@@ -1,65 +1,65 @@
 ﻿@model RzrSite.Admin.ViewModels.ProductLines.IndexViewModel
 @{
-  ViewData["Title"] = $"Список линеек, например";
+    ViewData["Title"] = $"Список линеек, например";
 }
 
 <div class="text-center">
-  <table class="table flex-fill">
-    <thead>
-      <tr>
-        <th width="70px">
-          Id категории
-        </th>
-        <th width="50px">
-          Id
-        </th>
-        <th width="120px">
-          Название
-        </th>
-        <th>
-          Вес
-        </th>
-        <th>
-          Ссылка
-        </th>
-        <th width="250">
-          Действия
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach (var pair in Model.ProductLines)
-      {
-        @foreach (var pLine in pair.Value)
-        {
-          <tr>
-            <td>
-              @pair.Key
-            </td>
-            <td>
-              @pLine.Id
-            </td>
-            <td>
-              @pLine.Name
-            </td>
-            <td>
-              @pLine.Weight
-            </td>
-            <td>
-              @pLine.Path
-            </td>
-            <td>
-              <a asp-action="Edit" asp-route-categoryId="@pair.Key" asp-route-id="@pLine.Id">Редактировать</a><br />
-              <a asp-action="Delete" asp-route-categoryId="@pair.Key" asp-route-id="@pLine.Id">Удалить</a>
-            </td>
-          </tr>
-        }
-      }
-      <tr>
-        <td class="border-info" colspan="6">
-          <a class="text-info" asp-controller="Category">Чтобы добавить линейку - открой категорию, в которую хочешь добавить линейку</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table flex-fill">
+        <thead>
+            <tr>
+                <th width="70px">
+                    Id категории
+                </th>
+                <th width="50px">
+                    Id
+                </th>
+                <th width="120px">
+                    Название
+                </th>
+                <th>
+                    Вес
+                </th>
+                <th>
+                    Ссылка
+                </th>
+                <th width="250">
+                    Действия
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pair in Model.ProductLines)
+            {
+                @foreach (var pLine in pair.Value)
+                {
+                    <tr>
+                        <td>
+                            @pair.Key
+                        </td>
+                        <td>
+                            @pLine.Id
+                        </td>
+                        <td>
+                            @pLine.Name
+                        </td>
+                        <td>
+                            @pLine.Weight
+                        </td>
+                        <td>
+                            @pLine.Path
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-categoryId="@pair.Key" asp-route-id="@pLine.Id">Редактировать</a><br />
+                            <a asp-action="Delete" asp-route-categoryId="@pair.Key" asp-route-id="@pLine.Id">Удалить</a>
+                        </td>
+                    </tr>
+                }
+            }
+            <tr>
+                <td class="border-info" colspan="6">
+                    <a class="text-info" asp-controller="Category">Чтобы добавить линейку - открой категорию, в которую хочешь добавить линейку</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
