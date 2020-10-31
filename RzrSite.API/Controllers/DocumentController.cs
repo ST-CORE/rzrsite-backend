@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RzrSite.DAL.Repositories.Interfaces;
 using RzrSite.Models.Resources.Documents;
+using RzrSite.Models.Responses.Documents;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RzrSite.API.Controllers
 {
@@ -12,15 +14,15 @@ namespace RzrSite.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IProductLineRepo _productLineRepo;
+        private readonly IDbFileRepo _dbFileRepo;
 
-        public DocumentController(IMapper mapper, IProductLineRepo productLineRepo)
+        public DocumentController(IMapper mapper, IProductLineRepo productLineRepo, IDbFileRepo dbFileRepo)
         {
             _mapper = mapper;
             _productLineRepo = productLineRepo;
+            _dbFileRepo = dbFileRepo;
         }
-
-
-
+        
         [HttpPost("/api/document/add")]
         public async Task<IActionResult> Add(PostDocument model)
         {
@@ -48,6 +50,19 @@ namespace RzrSite.API.Controllers
         {
             await _productLineRepo.DeleteDocument(id);
             return Ok("Ok");
+        }
+
+        [HttpGet("/api/document/product-line/{id}")]
+        public IActionResult GetProductDocuments(int id)
+        {
+            var documents = _productLineRepo.GetDocuments(id);
+            var model = documents.Select(_mapper.Map<ProductLineDocumentResponse>).ToList();
+            foreach (var item in model)
+            {
+                var file = _dbFileRepo.Get(item.FileId);
+                item.FilePath = file?.Path;
+            }
+            return Ok(model);
         }
     }
 }
