@@ -1,50 +1,56 @@
 ﻿@model RzrSite.Models.Resources.ProductLine.PostProductLine
 @{
-  ViewData["Title"] = $"Добавление линейки";
+    ViewData["Title"] = $"Добавление линейки";
 }
-  <div class="row">
+<div class="row">
     <div class="col-md-8">
-      <h2>@ViewData["Title"]</h2>
-      <section>
-        <form asp-action="Add" method="post" class="border-info form-horizontal" role="form">
-          <div class="form-group form-row">
-            <label class="col-md-2 control-label">Название</label>
-            <div class="col-md-10">
-              <input type="text" name="@nameof(Model.Name)" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group form-row">
-            <label class="col-md-2 control-label">Описание</label>
-            <div class="col-md-10">
-              <textarea name="@nameof(Model.Description)" class="form-control">
+        <h2>@ViewData["Title"]</h2>
+        <section>
+            <form asp-action="Add" method="post" class="border-info form-horizontal" role="form">
+                <div class="form-group form-row">
+                    <label class="col-md-2 control-label">Название</label>
+                    <div class="col-md-10">
+                        <input type="text" name="@nameof(Model.Name)" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <label class="col-md-2 control-label">Описание</label>
+                    <div class="col-md-10">
+                        <textarea name="@nameof(Model.Description)" class="form-control">
               </textarea>
-            </div>
-          </div>
-          <div class="form-group form-row">
-            <label class="col-md-2 control-label">Вес</label>
-            <div class="col-md-10">
-              <input name="@nameof(Model.Description)" type="text" class="form-control"/>
-            </div>
-          </div>
-          <div class="form-group form-row">
-            <label class="col-md-2 control-label">Ссылка</label>
-            <div class="col-md-10">
-              <div class="row">
-                <div class="col-md-3">
-                  <span class="text-info text-host">{category-url}</span>
+                    </div>
                 </div>
-                <div class="col-md-9">
-                  <input type="text" name="@nameof(Model.Path)" class="form-control" />
+                <div class="form-group form-row">
+                    <label class="col-md-2 control-label">Вес</label>
+                    <div class="col-md-10">
+                        <input name="@nameof(Model.Description)" type="text" class="form-control" />
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group form-row">
-            <div class="col-md-10 offset-2">
-              <button type="submit" class="btn btn-outline-info btn-block form-control">Создать</button>
-            </div>
-          </div>
-        </form>
-      </section>
+                <div class="form-group form-row">
+                    <label class="col-md-2 control-label">Отображать на главной</label>
+                    <div class="col-md-10">
+                        <input name="@nameof(Model.IsShowOnMain)" type="checkbox" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <label class="col-md-2 control-label">Ссылка</label>
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <span class="text-info text-host">{category-url}</span>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" name="@nameof(Model.Path)" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-row">
+                    <div class="col-md-10 offset-2">
+                        <button type="submit" class="btn btn-outline-info btn-block form-control">Создать</button>
+                    </div>
+                </div>
+            </form>
+        </section>
     </div>
-  </div>
+</div>

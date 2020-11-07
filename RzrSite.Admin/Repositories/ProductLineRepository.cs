@@ -1,15 +1,14 @@
 ﻿using Newtonsoft.Json;
 using RzrSite.Admin.Helper;
 using RzrSite.Admin.Repositories.Interfaces;
+using RzrSite.Models.Entities;
+using RzrSite.Models.Resources.Documents;
 using RzrSite.Models.Resources.ProductLine;
 using RzrSite.Models.Responses.ProductLine;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using RzrSite.Models.Entities.Interfaces;
-using RzrSite.Models.Resources.Documents;
-using RzrSite.Models.Entities;
 
 namespace RzrSite.Admin.Repositories
 {
@@ -115,6 +114,12 @@ namespace RzrSite.Admin.Repositories
         public async Task<bool> DeleteDocument(int id)
         {
             var response = await _client.DeleteAsync($"{UrlLocator.ApiUrl}/document/delete/{id}");
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> SetShowOnMain(int categoryId, int productLineId)
+        {
+            var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/category/{categoryId}/productline/{productLineId}/showonmain");
             return response.IsSuccessStatusCode;
         }
     }

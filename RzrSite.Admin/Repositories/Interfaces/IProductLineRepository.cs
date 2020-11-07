@@ -1,10 +1,9 @@
-﻿using RzrSite.Models.Resources.ProductLine;
+﻿using RzrSite.Models.Entities;
+using RzrSite.Models.Resources.Documents;
+using RzrSite.Models.Resources.ProductLine;
 using RzrSite.Models.Responses.ProductLine;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RzrSite.Models.Entities.Interfaces;
-using RzrSite.Models.Resources.Documents;
-using RzrSite.Models.Entities;
 
 namespace RzrSite.Admin.Repositories.Interfaces
 {
@@ -20,5 +19,6 @@ namespace RzrSite.Admin.Repositories.Interfaces
         Task<bool> AddDocument(PostDocument putProductLine);
         Task<bool> EditDocument(PutDocument model);
         Task<bool> DeleteDocument(int id);
+        Task<bool> SetShowOnMain(int categoryId, int productLineId);
     }
 }

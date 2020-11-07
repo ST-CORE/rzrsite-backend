@@ -177,5 +177,17 @@ namespace RzrSite.DAL.Repositories
             _ctx.Documents.Remove(document);
             await _ctx.SaveChangesAsync();
         }
+
+        public async Task SetShowOnMain(int productLineId)
+        {
+            var productLine = await _ctx.ProductLines.FirstOrDefaultAsync(x => x.Id == productLineId);
+            if (productLine == null) return;
+
+            var lines = await _ctx.ProductLines.Where(x => x.CategoryId == productLine.CategoryId).ToListAsync();
+            foreach (var line in lines) line.IsShowOnMain = false;
+            productLine.IsShowOnMain = true;
+
+            await _ctx.SaveChangesAsync();
+        }
     }
 }
