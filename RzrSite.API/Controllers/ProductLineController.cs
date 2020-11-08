@@ -6,6 +6,7 @@ using RzrSite.Models.Resources.ProductLine;
 using RzrSite.Models.Responses.ProductLine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace RzrSite.API.Controllers
 {
@@ -53,19 +54,22 @@ namespace RzrSite.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProductLine(int categoryId, PostProductLine prodLine)
+        public async Task<IActionResult> AddProductLine(int categoryId, PostProductLine prodLine)
         {
             var prodLineId = _repo.Add(categoryId, prodLine);
+            if (prodLineId.HasValue && prodLine.IsShowOnMain) await _repo.SetShowOnMain(prodLineId.Value);
             return Ok(new AddedProductLine(categoryId, prodLineId.Value));
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateProductLine(int categoryId, int id, PutProductLine prodLine)
+        public async Task<IActionResult> UpdateProductLine(int categoryId, int id, PutProductLine prodLine)
         {
             var category = _categoryRepo.Get(categoryId);
             if (category == null) return NotFound($"Category :{categoryId}: not found");
 
             var updatedProdLine = _repo.Update(categoryId, id, prodLine);
+
+            if (prodLine.IsShowOnMain) await _repo.SetShowOnMain(id);
 
             return Ok(_mapper.Map<StrippedProductLine>(updatedProdLine));
         }
@@ -95,6 +99,13 @@ namespace RzrSite.API.Controllers
             var documents = _repo.GetDocuments(id);
 
             return Ok(documents);
+        }
+
+        [HttpGet("{id}/showonmain")]
+        public async Task<IActionResult> ShowOnMain(int productLineId)
+        {
+            await _repo.SetShowOnMain(productLineId);
+            return Ok();
         }
     }
 }

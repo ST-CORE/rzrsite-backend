@@ -57,5 +57,6 @@ namespace RzrSite.DAL.Repositories.Interfaces
         Task UpdateDocument(int id, string description, int weight);
         Task<Document> GetDocument(int id);
         Task DeleteDocument(int id);
+        Task SetShowOnMain(int productLineId);
     }
 }
