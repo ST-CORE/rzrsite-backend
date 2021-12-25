@@ -48,7 +48,7 @@ namespace RzrSite.DAL.Repositories
       var model = _ctx.Advantages.Find(id);
 
       _ctx.Advantages.Remove(model);
-
+      _ctx.SaveChanges();
       return true;
     }
 
