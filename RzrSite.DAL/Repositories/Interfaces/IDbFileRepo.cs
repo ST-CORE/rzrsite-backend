@@ -8,7 +8,9 @@ namespace RzrSite.DAL.Repositories.Interfaces
   {
     IEnumerable<IStrippedDbFile> GetAll();
     IStrippedDbFile Get(int id);
-    IDbFile Get(string path);
+    IStrippedDbFile Get(string path);
+    IDbFile GetFull(int id);
+    IDbFile GetFull(string path);
     int? Add(IPostDbFile file);
     IStrippedDbFile Update(int id, IPutDbFile file);
     bool Delete(int id);

@@ -5,7 +5,6 @@ namespace RzrSite.Models.Resources.DbFile.Interfaces
   public interface IStrippedDbFile
   {
     int Id { get; set; }
-    byte[] Bytes { get; set; }
     string Path { get; set; }
     FileFormat Format { get; set; }
   }

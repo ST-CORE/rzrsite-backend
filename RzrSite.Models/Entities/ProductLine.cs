@@ -21,6 +21,7 @@ namespace RzrSite.Models.Entities
         public IList<IAdvantage> Advantages { get; set; } = new List<IAdvantage>();
         public IList<IDocument> Documents { get; set; } = new List<IDocument>();
         public IList<IProduct> Products { get; set; } = new List<IProduct>();
+        public IDbFile FeaturesPDF { get; set; }
         public bool IsShowOnMain { get; set; }
     }
 }

@@ -34,6 +34,7 @@ namespace RzrSite.DAL
             modelBuilder.Entity<ProductLine>().HasMany(pl => (IList<Advantage>)pl.Advantages).WithOne();
             modelBuilder.Entity<ProductLine>().HasMany(pl => (IList<Product>)pl.Products).WithOne();
             modelBuilder.Entity<ProductLine>().HasMany(pl => (IList<Document>)pl.Documents).WithOne();
+            modelBuilder.Entity<ProductLine>().HasOne(pl => (DbFile)pl.FeaturesPDF).WithMany();
 
             modelBuilder.Entity<Advantage>().HasOne(ad => (DbFile)ad.Icon).WithMany();
 

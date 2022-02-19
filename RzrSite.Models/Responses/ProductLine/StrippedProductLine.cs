@@ -9,5 +9,6 @@
     public string Description { get; set; }
     public int Weight { get; set; }
     public bool IsShowOnMain { get; set; }
+    public string FeaturesPDFPath { get; set; }
   }
 }

@@ -11,20 +11,17 @@ namespace RzrSite.API.Controllers
   [ApiController]
   public class FeatureGroupController : ControllerBase
   {
-    private readonly IMapper _mapper;
     private readonly IFeatureRepo _repo;
 
-    private readonly IFeatureTypeRepo _typeRepo;
     private readonly IProductLineRepo _productLineRepo;
     private readonly IProductRepo _productRepo;
 
-    public FeatureGroupController(IFeatureRepo repo, IFeatureTypeRepo typeRepo, IProductRepo productRepo, IMapper mapper)
+    public FeatureGroupController(IFeatureRepo repo, IProductRepo productRepo, IProductLineRepo productLineRepo)
     {
-      _mapper = mapper;
       _repo = repo;
 
-      _typeRepo = typeRepo;
       _productRepo = productRepo;
+      _productLineRepo = productLineRepo;
     }
 
     [HttpGet("{id}")]

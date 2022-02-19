@@ -12,182 +12,243 @@ using RzrSite.Models.Responses.ProductLine;
 
 namespace RzrSite.DAL.Repositories
 {
-    public class ProductLineRepo : IProductLineRepo
-    {
-        private readonly RzrSiteDbContext _ctx;
-        private readonly IMapper _mapper;
+  public class ProductLineRepo : IProductLineRepo
+  {
+	private readonly RzrSiteDbContext _ctx;
+	private readonly IMapper _mapper;
 
-        public ProductLineRepo(RzrSiteDbContext ctx, IMapper mapper)
-        {
-            _ctx = ctx;
-            _mapper = mapper;
-        }
+	public ProductLineRepo(RzrSiteDbContext ctx, IMapper mapper)
+	{
+	  _ctx = ctx;
+	  _mapper = mapper;
+	}
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public IEnumerable<IProductLine> GetAll(int categoryId)
-        {
-            if (!_ctx.Categories.Any(c => c.Id == categoryId))
-                throw new EntityNotFoundException($"Category with Id = {categoryId} not found!");
+	/// <summary>
+	/// <inheritdoc/>
+	/// </summary>
+	public IEnumerable<IProductLine> GetAll(int categoryId)
+	{
+	  if (!_ctx.Categories.Any(c => c.Id == categoryId))
+		throw new EntityNotFoundException($"Category with Id = {categoryId} not found!");
 
-            return _ctx.ProductLines.Where(pl => pl.CategoryId == categoryId).ToList();
-        }
+	  return _ctx.ProductLines.Where(pl => pl.CategoryId == categoryId).ToList();
+	}
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public IProductLine Get(int id)
-        {
-            return _ctx.ProductLines.Find(id);
-        }
+	/// <summary>
+	/// <inheritdoc/>
+	/// </summary>
+	public IProductLine Get(int id)
+	{
+	  return _ctx.ProductLines.Find(id);
+	}
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public IProductLine Update(int categoryId, int id, IPutProductLine productLine)
-        {
-            var entity = _ctx.ProductLines.Find(id);
-            if (entity == null) return null;
+	/// <summary>
+	/// <inheritdoc/>
+	/// </summary>
+	public IProductLine Update(int categoryId, int id, IPutProductLine productLine)
+	{
+	  var entity = _ctx.ProductLines.Find(id);
+	  if (entity == null) return null;
 
-            if (entity.CategoryId != categoryId)
-                throw new InconsistentStructureException($"ProductLine :{id}: is not in Category :{categoryId}:");
+	  if (entity.CategoryId != categoryId)
+		throw new InconsistentStructureException($"ProductLine :{id}: is not in Category :{categoryId}:");
 
-            entity = _mapper.Map(productLine, entity);
-            _ctx.ProductLines.Update(entity);
+	  entity = _mapper.Map(productLine, entity);
+	  
+	  if(productLine.FeaturesPDFPath != null)
+	  {
+		var file = _ctx.Files.FirstOrDefault(f => f.Path.ToLower() == productLine.FeaturesPDFPath.ToLower());
+		entity.FeaturesPDF = file;
+	  }
 
-            _ctx.SaveChanges();
+	  _ctx.ProductLines.Update(entity);
 
-            return entity;
-        }
+	  _ctx.SaveChanges();
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public int? Add(int categoryId, IPostProductLine productLine)
-        {
-            if (!_ctx.Categories.Any(c => c.Id == categoryId))
-                throw new EntityNotFoundException($"Category with Id = {categoryId} not found!");
+	  return entity;
+	}
 
-            var model = _mapper.Map<ProductLine>(productLine);
-            model.CategoryId = categoryId;
+	/// <summary>
+	/// <inheritdoc/>
+	/// </summary>
+	public int? Add(int categoryId, IPostProductLine productLine)
+	{
+	  if (!_ctx.Categories.Any(c => c.Id == categoryId))
+		throw new EntityNotFoundException($"Category with Id = {categoryId} not found!");
 
-            var result = _ctx.ProductLines.Add(model);
-            _ctx.SaveChanges();
+	  var entity = _mapper.Map<ProductLine>(productLine);
+	  entity.CategoryId = categoryId;
 
-            return result.Entity?.Id;
-        }
+	  var file = _ctx.Files.FirstOrDefault(f => f.Path.ToLower() == productLine.FeaturesPDFPath.ToLower());
+	  entity.FeaturesPDF = file;
+	  
+	  var result = _ctx.ProductLines.Add(entity);
+	  _ctx.SaveChanges();
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public bool Delete(int categoryId, int id)
-        {
-            if (!_ctx.Categories.Any(c => c.Id.Equals(categoryId)))
-                throw new EntityNotFoundException($"Category :{categoryId}: not found");
+	  return result.Entity?.Id;
+	}
 
-            if (!_ctx.ProductLines.Any(c => c.Id.Equals(id)))
-                throw new EntityNotFoundException($"ProductLine :{id}: not found");
+	/// <summary>
+	/// <inheritdoc/>
+	/// </summary>
+	public bool Delete(int categoryId, int id)
+	{
+	  if (!_ctx.Categories.Any(c => c.Id.Equals(categoryId)))
+		throw new EntityNotFoundException($"Category :{categoryId}: not found");
 
-            var productLine = _ctx.ProductLines.Find(id);
+	  if (!_ctx.ProductLines.Any(c => c.Id.Equals(id)))
+		throw new EntityNotFoundException($"ProductLine :{id}: not found");
 
-            if (productLine.CategoryId != categoryId)
-                throw new InconsistentStructureException($"ProductLine :{id}: is not in category :{categoryId}:");
+	  var productLine = _ctx.ProductLines.Find(id);
 
-            if (productLine.Products != null && productLine.Products.Any())
-                return false;
+	  if (productLine.CategoryId != categoryId)
+		throw new InconsistentStructureException($"ProductLine :{id}: is not in category :{categoryId}:");
 
-            //TODO: Cleanup advantages/documents
+	  if (productLine.Products != null && productLine.Products.Any())
+		return false;
 
-            _ctx.ProductLines.Remove(productLine);
+	  //TODO: Cleanup advantages/documents
 
-            _ctx.SaveChanges();
-            return true;
-        }
+	  _ctx.ProductLines.Remove(productLine);
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        public bool Exists(int id) => (_ctx.ProductLines.Where(pl => pl.Id == id) != null);
+	  _ctx.SaveChanges();
+	  return true;
+	}
 
-        public List<ProductLineDocument> GetDocuments(int productLineId)
-        {
-            var productLine = _ctx.ProductLines.Include(x => x.Documents).FirstOrDefault(x => x.Id == productLineId);
-            return productLine == null ? new List<ProductLineDocument>() : productLine.Documents.Select(x=>x as Document).Select(x=> new ProductLineDocument
-            {
-                Weight = x?.Weight ?? 0,
-                Description = x?.Description,
-                Id = x?.Id ?? 0,
-                FileId = x?.FileId ?? 0
-            }).ToList();
-        }
+	/// <summary>
+	/// <inheritdoc/>
+	/// </summary>
+  	public bool Exists(int id) => (_ctx.ProductLines.Where(pl => pl.Id == id) != null);
 
-        /// <summary>
-        /// Добавить документ
-        /// </summary>
-        /// <param name="productLineId"></param>
-        /// <param name="fileId"></param>
-        /// <param name="description"></param>
-        /// <param name="weight"></param>
-        /// <returns></returns>
-        public async Task AddDocument(int productLineId, int fileId, string description, int weight)
-        {
-            var productLine = await _ctx.ProductLines.FirstOrDefaultAsync(x => x.Id == productLineId);
-            if (productLine == null) return;
+	public List<ProductLineDocument> GetDocuments(int productLineId)
+	{
+	  var productLine = _ctx.ProductLines.Include(x => x.Documents).FirstOrDefault(x => x.Id == productLineId);
+	  return productLine == null ? new List<ProductLineDocument>() : productLine.Documents.Select(x => x as Document).Select(x => new ProductLineDocument
+	  {
+		Weight = x?.Weight ?? 0,
+		Description = x?.Description,
+		Id = x?.Id ?? 0,
+		FileId = x?.FileId ?? 0
+	  }).ToList();
+	}
 
-            productLine.Documents.Add(new Document
-            {
-                FileId = fileId,
-                Weight = weight,
-                Description = description
-            });
+	/// <summary>
+	/// Adds new document
+	/// </summary>
+	/// <param name="productLineId">Id of product line</param>
+	/// <param name="fileId">Id of new document</param>
+	/// <param name="description">Description of new document</param>
+	/// <param name="weight">Weight for sorting</param>
+	/// <returns></returns>
+	public async Task AddDocument(int productLineId, int fileId, string description, int weight)
+	{
+	  var productLine = await _ctx.ProductLines.FirstOrDefaultAsync(x => x.Id == productLineId);
+	  if (productLine == null) return;
 
-            await _ctx.SaveChangesAsync();
-        }
+	  productLine.Documents.Add(new Document
+	  {
+		FileId = fileId,
+		Weight = weight,
+		Description = description
+	  });
 
-        /// <summary>
-        /// Обновить документ
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="description"></param>
-        /// <param name="weight"></param>
-        /// <returns></returns>
-        public async Task UpdateDocument(int id, string description, int weight)
-        {
-            var document = await _ctx.Documents.FirstOrDefaultAsync(x => x.Id == id);
+	  await _ctx.SaveChangesAsync();
+	}
 
-            if (document == null) return;
+	/// <summary>
+	/// Обновить документ
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="description"></param>
+	/// <param name="weight"></param>
+	/// <returns></returns>
+	public async Task UpdateDocument(int id, string description, int weight)
+	{
+	  var document = await _ctx.Documents.FirstOrDefaultAsync(x => x.Id == id);
 
-            document.Description = description;
-            document.Weight = weight;
+	  if (document == null) return;
 
-            await _ctx.SaveChangesAsync();
-        }
+	  document.Description = description;
+	  document.Weight = weight;
 
-        public async Task<Document> GetDocument(int id)
-        {
-            var document = await _ctx.Documents.FirstOrDefaultAsync(x => x.Id == id);
-            return document;
-        }
+	  await _ctx.SaveChangesAsync();
+	}
 
-        public async Task DeleteDocument(int id)
-        {
-            var document = await _ctx.Documents.FirstOrDefaultAsync(x => x.Id == id);
-            if (document == null) return;
-            _ctx.Documents.Remove(document);
-            await _ctx.SaveChangesAsync();
-        }
+	public async Task<Document> GetDocument(int id)
+	{
+	  var document = await _ctx.Documents.FirstOrDefaultAsync(x => x.Id == id);
+	  return document;
+	}
 
-        public async Task SetShowOnMain(int productLineId)
-        {
-            var productLine = await _ctx.ProductLines.FirstOrDefaultAsync(x => x.Id == productLineId);
-            if (productLine == null) return;
+	public async Task DeleteDocument(int id)
+	{
+	  var document = await _ctx.Documents.FirstOrDefaultAsync(x => x.Id == id);
+	  if (document == null) return;
+	  _ctx.Documents.Remove(document);
+	  await _ctx.SaveChangesAsync();
+	}
 
-            var lines = await _ctx.ProductLines.Where(x => x.CategoryId == productLine.CategoryId).ToListAsync();
-            foreach (var line in lines) line.IsShowOnMain = false;
-            productLine.IsShowOnMain = true;
+	public async Task SetShowOnMain(int productLineId)
+	{
+	  var productLine = await _ctx.ProductLines.FirstOrDefaultAsync(x => x.Id == productLineId);
+	  if (productLine == null) return;
 
-            await _ctx.SaveChangesAsync();
-        }
-    }
+	  var lines = await _ctx.ProductLines.Where(x => x.CategoryId == productLine.CategoryId).ToListAsync();
+	  foreach (var line in lines) line.IsShowOnMain = false;
+	  productLine.IsShowOnMain = true;
+
+	  await _ctx.SaveChangesAsync();
+	}
+
+	/// <summary>
+	/// <inheritdoc/>
+	/// </summary>
+	public ProductLineDocument GetFeaturesPDF(int productLineId)
+	{
+	  var productLine = _ctx.ProductLines.Include(x => x.FeaturesPDF).FirstOrDefault(x => x.Id == productLineId);
+	  var pdf = productLine.FeaturesPDF;
+
+	  if (pdf == null)
+	  {
+		return null;
+	  }
+
+	  return new ProductLineDocument
+	  {
+		Weight = 0,
+		Description = "Документ, описывающий технические характеристики продукта",
+		Id = pdf.Id,
+		FileId = pdf.Id
+	  };
+	}
+
+	/// <summary>
+	/// <inheritdoc/>
+	/// </summary>
+	public ProductLineDocument SetAsFeaturesPDF(int productLineId, int fileId)
+	{
+
+	  var productLine = _ctx.ProductLines.Include(x => x.FeaturesPDF).FirstOrDefault(x => x.Id == productLineId);
+
+	  if (productLine.FeaturesPDF != null)
+	  {
+		productLine.FeaturesPDF = null;
+	  }
+
+	  var file = _ctx.Files.FirstOrDefault(x => x.Id == fileId);
+
+	  if (file == null)
+		return null;
+
+	  productLine.FeaturesPDF = file;
+
+	  return new ProductLineDocument
+	  {
+		FileId = fileId,
+		FilePath = file.Path,
+		Description = "Документ, описывающий характеристики продукта",
+		Weight = 0
+	  };
+	}
+  }
 }

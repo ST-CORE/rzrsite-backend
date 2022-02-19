@@ -14,7 +14,7 @@ namespace RzrSite.DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3");
+                .HasAnnotation("ProductVersion", "5.0.14");
 
             modelBuilder.Entity("RzrSite.Models.Entities.Advantage", b =>
                 {
@@ -235,6 +235,9 @@ namespace RzrSite.DAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("FeaturesPDFId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsShowOnMain")
                         .HasColumnType("INTEGER");
 
@@ -251,6 +254,8 @@ namespace RzrSite.DAL.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("FeaturesPDFId");
+
                     b.ToTable("ProductLines");
                 });
 
@@ -265,6 +270,8 @@ namespace RzrSite.DAL.Migrations
                         .HasForeignKey("ProductLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Icon");
                 });
 
             modelBuilder.Entity("RzrSite.Models.Entities.Document", b =>
@@ -287,6 +294,8 @@ namespace RzrSite.DAL.Migrations
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("RzrSite.Models.Entities.Image", b =>
@@ -302,6 +311,10 @@ namespace RzrSite.DAL.Migrations
                     b.HasOne("RzrSite.Models.Entities.DbFile", "Thumb")
                         .WithMany()
                         .HasForeignKey("ThumbId");
+
+                    b.Navigation("Full");
+
+                    b.Navigation("Thumb");
                 });
 
             modelBuilder.Entity("RzrSite.Models.Entities.Product", b =>
@@ -320,6 +333,33 @@ namespace RzrSite.DAL.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("RzrSite.Models.Entities.DbFile", "FeaturesPDF")
+                        .WithMany()
+                        .HasForeignKey("FeaturesPDFId");
+
+                    b.Navigation("FeaturesPDF");
+                });
+
+            modelBuilder.Entity("RzrSite.Models.Entities.Category", b =>
+                {
+                    b.Navigation("ProductLines");
+                });
+
+            modelBuilder.Entity("RzrSite.Models.Entities.Product", b =>
+                {
+                    b.Navigation("Features");
+
+                    b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("RzrSite.Models.Entities.ProductLine", b =>
+                {
+                    b.Navigation("Advantages");
+
+                    b.Navigation("Documents");
+
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
