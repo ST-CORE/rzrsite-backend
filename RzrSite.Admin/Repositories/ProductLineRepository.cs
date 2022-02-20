@@ -2,6 +2,7 @@
 using RzrSite.Admin.Helper;
 using RzrSite.Admin.Repositories.Interfaces;
 using RzrSite.Models.Entities;
+using RzrSite.Models.Resources.DbFile;
 using RzrSite.Models.Resources.Documents;
 using RzrSite.Models.Resources.ProductLine;
 using RzrSite.Models.Responses.ProductLine;
@@ -36,6 +37,18 @@ namespace RzrSite.Admin.Repositories
 	  {
 		var resultString = await response.Content.ReadAsStringAsync();
 		return JsonConvert.DeserializeObject<FullProductLine>(resultString);
+	  }
+
+	  return null;
+	}
+
+	public async Task<StrippedDbFile> GetFeaturesPdf(int categoryId, int productLineId)
+	{
+	  var response = await _client.GetAsync($"{UrlLocator.ApiUrl}/category/{categoryId}/productline/{productLineId}/featurespdf");
+	  if (response.IsSuccessStatusCode)
+	  {
+		var resultString = await response.Content.ReadAsStringAsync();
+		return JsonConvert.DeserializeObject<StrippedDbFile>(resultString);
 	  }
 
 	  return null;

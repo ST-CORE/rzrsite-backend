@@ -8,7 +8,10 @@ namespace RzrSite.Models.Responses.ProductLine.Mappings
     public ProductLineResponseProfile()
     {
       CreateMap<IProductLine, FullProductLine>();
-      CreateMap<IProductLine, StrippedProductLine>();
+      CreateMap<IProductLine, StrippedProductLine>()
+        .ForMember(d => d.FeaturesPDFPath, d => d.MapFrom(s => s.FeaturesPDF.Path));
+      CreateMap<FullProductLine, StrippedProductLine>()
+        .ForMember(d => d.FeaturesPDFPath, d => d.MapFrom(s => s.FeaturesPDF.Path));
     }
   }
 }

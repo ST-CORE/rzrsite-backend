@@ -203,7 +203,7 @@ namespace RzrSite.DAL.Repositories
 	/// <summary>
 	/// <inheritdoc/>
 	/// </summary>
-	public ProductLineDocument GetFeaturesPDF(int productLineId)
+	public IDbFile GetFeaturesPDF(int productLineId)
 	{
 	  var productLine = _ctx.ProductLines.Include(x => x.FeaturesPDF).FirstOrDefault(x => x.Id == productLineId);
 	  var pdf = productLine.FeaturesPDF;
@@ -213,19 +213,13 @@ namespace RzrSite.DAL.Repositories
 		return null;
 	  }
 
-	  return new ProductLineDocument
-	  {
-		Weight = 0,
-		Description = "Документ, описывающий технические характеристики продукта",
-		Id = pdf.Id,
-		FileId = pdf.Id
-	  };
+	  return pdf;
 	}
 
 	/// <summary>
 	/// <inheritdoc/>
 	/// </summary>
-	public ProductLineDocument SetAsFeaturesPDF(int productLineId, int fileId)
+	public IDbFile SetAsFeaturesPDF(int productLineId, int fileId)
 	{
 
 	  var productLine = _ctx.ProductLines.Include(x => x.FeaturesPDF).FirstOrDefault(x => x.Id == productLineId);
@@ -242,13 +236,7 @@ namespace RzrSite.DAL.Repositories
 
 	  productLine.FeaturesPDF = file;
 
-	  return new ProductLineDocument
-	  {
-		FileId = fileId,
-		FilePath = file.Path,
-		Description = "Документ, описывающий характеристики продукта",
-		Weight = 0
-	  };
+	  return file;
 	}
   }
 }

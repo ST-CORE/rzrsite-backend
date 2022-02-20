@@ -1,4 +1,5 @@
 ﻿using RzrSite.Models.Entities;
+using RzrSite.Models.Resources.DbFile;
 using RzrSite.Models.Resources.Documents;
 using RzrSite.Models.Resources.ProductLine;
 using RzrSite.Models.Responses.ProductLine;
@@ -20,5 +21,6 @@ namespace RzrSite.Admin.Repositories.Interfaces
         Task<bool> EditDocument(PutDocument model);
         Task<bool> DeleteDocument(int id);
         Task<bool> SetShowOnMain(int categoryId, int productLineId);
+        Task<StrippedDbFile> GetFeaturesPdf(int categoryId, int productLineId);
     }
 }

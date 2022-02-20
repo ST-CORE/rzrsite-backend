@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RzrSite.DAL.Repositories.Interfaces;
 using RzrSite.Models.Entities;
 using RzrSite.Models.Entities.Interfaces;
@@ -33,7 +34,10 @@ namespace RzrSite.DAL.Repositories
     public ICategory Get(int id)
     {
       var category = _ctx.Categories.Find(id);
-      category.ProductLines = _ctx.ProductLines.Any(pl => pl.CategoryId == id)? _ctx.ProductLines.Where(pl => pl.CategoryId == id).AsEnumerable<IProductLine>().ToList(): null;
+      category.ProductLines = _ctx.ProductLines.Any(pl => pl.CategoryId == id)
+        ? _ctx.ProductLines.Include(pl => pl.FeaturesPDF).Where(pl => pl.CategoryId == id).AsEnumerable<IProductLine>().ToList()
+        : null;
+
       return category;
     }
 

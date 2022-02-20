@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RzrSite.Models.Entities;
 using RzrSite.Models.Resources.ProductLine.Interfaces;
+using RzrSite.Models.Responses.ProductLine;
 
 namespace RzrSite.DAL.Mappings
 {

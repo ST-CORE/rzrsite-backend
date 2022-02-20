@@ -35,7 +35,6 @@ namespace RzrSite.Models.Entities.Interfaces
     IList<IAdvantage> Advantages { get; set; }
     IList<IDocument> Documents { get; set; }
     IList<IProduct> Products { get; set; }
-
     IDbFile FeaturesPDF { get; set; }
 
     bool IsShowOnMain { get; set; }

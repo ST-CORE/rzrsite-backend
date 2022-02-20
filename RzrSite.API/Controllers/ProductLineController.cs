@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RzrSite.DAL.Exceptions;
 using RzrSite.DAL.Repositories.Interfaces;
+using RzrSite.Models.Resources.DbFile;
 using RzrSite.Models.Resources.ProductLine;
 using RzrSite.Models.Responses.ProductLine;
 using System.Collections.Generic;
@@ -39,9 +40,9 @@ namespace RzrSite.API.Controllers
 
 	  var viewModel = _mapper.Map<IList<StrippedProductLine>>(prodLines);
 
-	  foreach (var pl in viewModel)
+	  foreach(var pl in viewModel)
 	  {
-		pl.FeaturesPDFPath = _repo.GetFeaturesPDF(pl.Id)?.FilePath;
+		pl.FeaturesPDFPath = _repo.GetFeaturesPDF(pl.Id).Path;
 	  }
 
 	  return Ok(viewModel);
@@ -58,14 +59,17 @@ namespace RzrSite.API.Controllers
 
 	  if (prodLine.CategoryId != categoryId)
 		throw new InconsistentStructureException($"ProductLine :{id}: not found in Category :{categoryId}:");
+	  var fullProdLine = _mapper.Map<FullProductLine>(prodLine);
+	  var featuresPdf = _repo.GetFeaturesPDF(fullProdLine.Id);
 
-	  return Ok(_mapper.Map<FullProductLine>(prodLine));
+	  fullProdLine.FeaturesPDF = _mapper.Map<StrippedDbFile>(featuresPdf);
+
+	  return Ok(fullProdLine);
 	}
 
 	[HttpPost]
 	public async Task<IActionResult> AddProductLine(int categoryId, PostProductLine prodLine)
 	{
-
 	  var prodLineId = _repo.Add(categoryId, prodLine);
 	  if (prodLineId.HasValue && prodLine.IsShowOnMain) await _repo.SetShowOnMain(prodLineId.Value);
 
@@ -117,6 +121,23 @@ namespace RzrSite.API.Controllers
 	  var documents = _repo.GetDocuments(id);
 
 	  return Ok(documents);
+	}
+
+	[HttpGet("{id}/featurespdf")]
+	public IActionResult GetProductLineFeaturesPdf(int categoryId, int id)
+	{
+	  var category = _categoryRepo.Get(categoryId);
+	  if (category == null) return NotFound($"Category :{categoryId}: not found");
+
+	  var prodLine = _repo.Get(id);
+	  if (prodLine == null) return NoContent();
+
+	  if (prodLine.CategoryId != categoryId)
+		throw new InconsistentStructureException($"ProductLine :{id}: not found in Category :{categoryId}:");
+
+	  var featuresPdf = _mapper.Map<StrippedDbFile>(_repo.GetFeaturesPDF(id));
+
+	  return Ok(featuresPdf);
 	}
 
 	[HttpGet("{id}/showonmain")]

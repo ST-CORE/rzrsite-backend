@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using RzrSite.Models.Entities;
-using RzrSite.Models.Entities.Interfaces;
 using RzrSite.Models.Resources.DbFile;
 using RzrSite.Models.Resources.DbFile.Interfaces;
-using System.Collections.Generic;
 
 namespace RzrSite.DAL.Mappings
 {

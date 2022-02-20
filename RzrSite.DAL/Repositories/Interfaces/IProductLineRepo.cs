@@ -62,14 +62,14 @@ namespace RzrSite.DAL.Repositories.Interfaces
 	/// </summary>
 	/// <param name="productLineId">Id of product line</param>
 	/// <returns>DTO for document</returns>
-	ProductLineDocument GetFeaturesPDF(int productLineId);
+	IDbFile GetFeaturesPDF(int productLineId);
 
 	/// <summary>
 	/// Sets provided file as an advantage file for document
 	/// </summary>
 	/// <param name="fileId">Id of selected file</param>
 	/// <returns>DTO of added document</returns>
-	ProductLineDocument SetAsFeaturesPDF(int productLineId, int fileId);
+	IDbFile SetAsFeaturesPDF(int productLineId, int fileId);
 
 	Task AddDocument(int productLineId, int fileId, string description, int weight);
 	Task UpdateDocument(int id, string description, int weight);
