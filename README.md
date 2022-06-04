@@ -9,7 +9,6 @@ docker build -t aspnet-rzrsite:release .
 docker run -d -t -p 4242:4242 --name rzrsite-api aspnet-rzrsite:release
 
 ##Published version
-http://194.58.119.151:4242  (done by teamcity)
 
 ## Supported endpoints:
 /Category - provides list of categories
