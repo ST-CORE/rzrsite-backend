@@ -21,6 +21,7 @@ namespace RzrSite.Models.Entities
     [ForeignKey("ProductLine")]
     public int ProductLineId { get; set; }
     public IList<IImage> Images { get; set; }
-    public IList<IFeature> Features { get; set; }
+		public IList<IVideo> Videos { get; set; }
+		public IList<IFeature> Features { get; set; }
   }
 }

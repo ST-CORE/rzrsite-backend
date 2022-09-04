@@ -1,0 +1,17 @@
+﻿@model RzrSite.Admin.ViewModels.ProductContent.VideoViewModel
+<div class="row">
+  <div class="col-md-1">
+    @Model.Id
+  </div>
+  <div class="col-md-9">
+        @(string.IsNullOrWhiteSpace(Model.Url) ? "Не задан" : $"{Model.Url}")
+  </div>
+  <div class="col-md-2">
+    <div class="row">
+      <a asp-action="Edit" asp-controller="Video" asp-route-categoryId="@Model.CategoryId" asp-route-productLineId="@Model.ProductLineId" asp-route-productId="@Model.ProductId" asp-route-id="@Model.Id">Редактировать</a>
+    </div>
+    <div class="row">
+      <a asp-action="Delete" asp-controller="Video" asp-route-categoryId="@Model.CategoryId" asp-route-productLineId="@Model.ProductLineId" asp-route-productId="@Model.ProductId" asp-route-id="@Model.Id">Удалить</a>
+    </div>
+  </div>
+</div>

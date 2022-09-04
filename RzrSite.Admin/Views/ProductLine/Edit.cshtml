@@ -26,7 +26,7 @@
 					<div class="col-md-10">
 						<textarea name="@nameof(Model.Description)" class="form-control">
 							@Model.Description
-			</textarea>
+						</textarea>
 					</div>
 				</div>
 				<div class="form-group form-row">
@@ -71,12 +71,12 @@
 					<label class="col-md-2 control-label">Преимущества</label>
 					<div class="col-md-10">
 						@await Component.InvokeAsync("Advantage", new { categoryId, productLineId })
-					</div>
-					<div class="row">
-						<div class="offset-8 col-md-4">
-							<a asp-action="Add" asp-controller="Advantage" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" class="btn btn-block btn-success">
-								Добавить
-							</a>
+						<div class="row">
+							<div class="offset-8 col-md-4">
+								<a asp-action="Add" asp-controller="Advantage" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" class="btn btn-block btn-success">
+									Добавить
+								</a>
+							</div><a href="c:\sources\rzr-site\rzrsite-backend\rzrsite.admin\views\productline\edit.cshtml">c:\sources\rzr-site\rzrsite-backend\rzrsite.admin\views\productline\edit.cshtml</a>
 						</div>
 					</div>
 				</div>
@@ -114,19 +114,6 @@
 							</div>
 							<div class="col-md-7">
 								<input type="text" name="@nameof(Model.FeaturesPDFPath)" class="form-control" value="@Model.FeaturesPDFPath" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-group form-row">
-					<label class="col-md-2 control-label">Ссылка на ролик на ютубе</label>
-					<div class="col-md-10">
-						<div class="row">
-							<div class="col-md-2">
-								<span class="text-info text-host">URL:</span>
-							</div>
-							<div class="col-md-10">
-								<input type="text" name="@nameof(Model.LinkToVideo)" class="form-control" value="@Model.LinkToVideo" />
 							</div>
 						</div>
 					</div>

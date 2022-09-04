@@ -67,13 +67,18 @@
             </div>*@
         </div>
         <div class="form-group form-row">
-          <label class="col-md-2 control-label">Картинки</label>
+          <label class="col-md-2 control-label">Контент</label>
           <div class="col-md-10">
-            @await Component.InvokeAsync("Image", new { categoryId, productLineId, productId = Model.Id })
+            @await Component.InvokeAsync("ProductContent", new { categoryId, productLineId, productId = Model.Id })
             <div class="row">
-              <div class="offset-8 col-md-4">
+              <div class="offset-4 col-md-4">
                 <a asp-action="Add" asp-controller="Image" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" asp-route-productId="@Model.Id" class="btn btn-block btn-success">
-                  Добавить
+                  Добавить картинку
+                </a>
+              </div>
+              <div class="col-md-4">
+                <a asp-action="Add" asp-controller="Video" asp-route-categoryId="@categoryId" asp-route-productLineId="@productLineId" asp-route-productId="@Model.Id" class="btn btn-block btn-success">
+                  Добавить видео
                 </a>
               </div>
             </div>

@@ -241,9 +241,6 @@ namespace RzrSite.DAL.Migrations
                     b.Property<bool>("IsShowOnMain")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("LinkToVideo")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -260,6 +257,31 @@ namespace RzrSite.DAL.Migrations
                     b.HasIndex("FeaturesPDFId");
 
                     b.ToTable("ProductLines");
+                });
+
+            modelBuilder.Entity("RzrSite.Models.Entities.Video", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Videos");
                 });
 
             modelBuilder.Entity("RzrSite.Models.Entities.Advantage", b =>
@@ -344,6 +366,13 @@ namespace RzrSite.DAL.Migrations
                     b.Navigation("FeaturesPDF");
                 });
 
+            modelBuilder.Entity("RzrSite.Models.Entities.Video", b =>
+                {
+                    b.HasOne("RzrSite.Models.Entities.Product", null)
+                        .WithMany("Videos")
+                        .HasForeignKey("ProductId");
+                });
+
             modelBuilder.Entity("RzrSite.Models.Entities.Category", b =>
                 {
                     b.Navigation("ProductLines");
@@ -354,6 +383,8 @@ namespace RzrSite.DAL.Migrations
                     b.Navigation("Features");
 
                     b.Navigation("Images");
+
+                    b.Navigation("Videos");
                 });
 
             modelBuilder.Entity("RzrSite.Models.Entities.ProductLine", b =>

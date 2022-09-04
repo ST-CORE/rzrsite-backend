@@ -48,9 +48,9 @@ namespace RzrSite.API.Controllers
         }
 
         [HttpPost("Image")]
-        public IActionResult AddImage(int productId, PostImage advantage)
+        public IActionResult AddImage(int productId, PostImage image)
         {
-            var imageId = _repo.Add(productId, advantage);
+            var imageId = _repo.Add(productId, image);
             return Ok(new AddedImage(productId, imageId.Value));
         }
 

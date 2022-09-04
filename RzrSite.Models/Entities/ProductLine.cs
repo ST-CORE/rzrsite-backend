@@ -23,6 +23,5 @@ namespace RzrSite.Models.Entities
 	public IList<IProduct> Products { get; set; } = new List<IProduct>();
 	public IDbFile FeaturesPDF { get; set; }
 	public bool IsShowOnMain { get; set; }
-	public string LinkToVideo { get; set; }
   }
 }

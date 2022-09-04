@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
@@ -15,75 +14,76 @@ using RzrSite.Models.Responses.DbFile;
 
 namespace RzrSite.API
 {
-    public class Startup
-    {
-        public IConfiguration Configuration;
+	public class Startup
+	{
+		public IConfiguration Configuration;
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+		public Startup(IConfiguration configuration)
+		{
+			Configuration = configuration;
+		}
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddAutoMapper(typeof(RzrSiteDbContext), typeof(AddedDbFile));
+		public void ConfigureServices(IServiceCollection services)
+		{
+			services.AddAutoMapper(typeof(RzrSiteDbContext), typeof(AddedDbFile));
 
-            services.AddCors();
+			services.AddCors();
 
-            services.Configure<ForwardedHeadersOptions>(options =>
-            {
-                options.ForwardedHeaders =
-              ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-            });
+			services.Configure<ForwardedHeadersOptions>(options =>
+			{
+				options.ForwardedHeaders =
+						ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+			});
 
-            services.AddControllers(options =>
-              {
-                  options.Filters.Add(new EntityNotFoundFilter());
-                  options.Filters.Add(new InconsistentStructureFilter());
-              });
+			services.AddControllers(options =>
+				{
+					options.Filters.Add(new EntityNotFoundFilter());
+					options.Filters.Add(new InconsistentStructureFilter());
+				});
 
-            services.AddScoped<ICategoryRepo, CategoryRepo>();
-            services.AddScoped<IProductLineRepo, ProductLineRepo>();
-            services.AddScoped<IDbFileRepo, DbFileRepo>();
-            services.AddScoped<IProductRepo, ProductRepo>();
-            services.AddScoped<IFeatureRepo, FeatureRepo>();
-            services.AddScoped<IAdvantageRepo, AdvantageRepo>();
-            services.AddScoped<IImageRepo, ImageRepo>();
-            services.AddScoped<IFeatureTypeRepo, FeatureTypeRepo>();
+			services.AddScoped<ICategoryRepo, CategoryRepo>();
+			services.AddScoped<IProductLineRepo, ProductLineRepo>();
+			services.AddScoped<IDbFileRepo, DbFileRepo>();
+			services.AddScoped<IProductRepo, ProductRepo>();
+			services.AddScoped<IFeatureRepo, FeatureRepo>();
+			services.AddScoped<IAdvantageRepo, AdvantageRepo>();
+			services.AddScoped<IImageRepo, ImageRepo>();
+			services.AddScoped<IVideoRepo, VideoRepo>();
+			services.AddScoped<IFeatureTypeRepo, FeatureTypeRepo>();
 
-            services.AddSwaggerDocument();
+			services.AddSwaggerDocument();
 
-            services.Configure<EmailServiceConfig>(Configuration.GetSection("EmailService"));
-            services.AddTransient<IEmailService, EmailService>();
+			services.Configure<EmailServiceConfig>(Configuration.GetSection("EmailService"));
+			services.AddTransient<IEmailService, EmailService>();
 
-            services.AddDbContext<RzrSiteDbContext>();
-        }
+			services.AddDbContext<RzrSiteDbContext>();
+		}
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
-            app.UseCors(
-              options => options.WithOrigins("http://rzrsite-backend.ru", "http://rzrsite.cashtusk.ru")
-                                .AllowAnyMethod()
-                                .AllowAnyHeader()
-                                .AllowCredentials()
-            );
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		{
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
+			else
+			{
+				app.UseExceptionHandler("/Error");
+			}
+			app.UseCors(
+				options => options.WithOrigins("http://rzrsite-backend.ru", "http://rzrsite.cashtusk.ru")
+													.AllowAnyMethod()
+													.AllowAnyHeader()
+													.AllowCredentials()
+			);
 
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
+			app.UseOpenApi();
+			app.UseSwaggerUi3();
 
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
-    }
+			app.UseRouting();
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapControllers();
+			});
+		}
+	}
 }

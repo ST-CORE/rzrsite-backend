@@ -17,6 +17,5 @@ namespace RzrSite.Models.Responses.ProductLine
 	public List<IProduct> Products { get; set; }
 	public bool IsShowOnMain { get; set; }
 	public StrippedDbFile FeaturesPDF { get; set; }
-	public string LinkToVideo { get; set; }
   }
 }

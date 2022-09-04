@@ -15,6 +15,5 @@ namespace RzrSite.Models.Resources.ProductLine
 	public bool IsShowOnMain { get; set; }
 	[Required]
 	public string FeaturesPDFPath { get; set; }
-	public string LinkToVideo { get; set; }
   }
 }

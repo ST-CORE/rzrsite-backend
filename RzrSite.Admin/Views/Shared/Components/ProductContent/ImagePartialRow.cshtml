@@ -1,0 +1,32 @@
+﻿@model RzrSite.Admin.ViewModels.ProductContent.ImageViewModel
+<div class="row">
+  <div class="col-md-1">
+    @Model.Id
+  </div>
+  <div class="col-md-9">
+    <div class="row">
+      <div class="col-md-3">
+        Большая:
+      </div>
+      <div class="col-md-9">
+        @(string.IsNullOrWhiteSpace(Model.FullPath) ? "Не задана" : $"{{category - path}}/{Model.FullPath}")
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        Обрезанная:
+      </div>
+      <div class="col-md-9">
+        @(string.IsNullOrWhiteSpace(Model.ThumbPath) ? "Не задана" : $"{{category - path}}/{Model.ThumbPath}")
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="row">
+      <a asp-action="Edit" asp-controller="Image" asp-route-categoryId="@Model.CategoryId" asp-route-productLineId="@Model.ProductLineId" asp-route-productId="@Model.ProductId" asp-route-id="@Model.Id">Редактировать</a>
+    </div>
+    <div class="row">
+      <a asp-action="Delete" asp-controller="Image" asp-route-categoryId="@Model.CategoryId" asp-route-productLineId="@Model.ProductLineId" asp-route-productId="@Model.ProductId" asp-route-id="@Model.Id">Удалить</a>
+    </div>
+  </div>
+</div>

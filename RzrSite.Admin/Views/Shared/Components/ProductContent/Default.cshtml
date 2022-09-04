@@ -1,0 +1,13 @@
+﻿@model RzrSite.Admin.ViewModels.ProductContent.ListViewModel
+
+@foreach (var piece in Model.Content)
+{
+  if (piece.Image != null) {
+      await Html.RenderPartialAsync("Components/ProductContent/ImagePartialRow", piece.Image);
+  }
+  else if (piece.Video != null)
+  {
+    await Html.RenderPartialAsync("Components/ProductContent/VideoPartialRow", piece.Video);
+  }
+  <hr />
+}
