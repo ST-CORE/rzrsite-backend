@@ -8,6 +8,6 @@
     int Weight { get; set; }
     bool IsShowOnMain { get; set; }
     string FeaturesPDFPath { get; set; }
-
+    string LinkToVideo { get; set; }
   }
 }

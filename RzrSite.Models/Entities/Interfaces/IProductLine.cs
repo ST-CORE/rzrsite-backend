@@ -38,5 +38,9 @@ namespace RzrSite.Models.Entities.Interfaces
     IDbFile FeaturesPDF { get; set; }
 
     bool IsShowOnMain { get; set; }
+    /// <summary>
+    /// Video from youtube displayed on site
+    /// </summary>
+    string LinkToVideo { get; set; }
   }
 }

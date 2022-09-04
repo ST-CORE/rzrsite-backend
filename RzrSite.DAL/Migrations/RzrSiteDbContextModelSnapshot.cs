@@ -241,6 +241,9 @@ namespace RzrSite.DAL.Migrations
                     b.Property<bool>("IsShowOnMain")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("LinkToVideo")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
